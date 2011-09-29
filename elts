@@ -1,0 +1,131 @@
+G ()
+{
+  z="$1"
+  elt="$2"
+  eltname="$3"
+  lcelt=`echo "$2" | tr A-Z a-z`
+  if test -r "isotope-$2.html" || wget -q -O isotope-$2.html "http://www.ncnr.nist.gov/resources/n-lengths/elements/$lcelt.html" ; then
+    perl parse-tope-info.pl isotope-$2.html $z
+  else
+    echo "no isotope page for $2" 1>&2
+  fi
+}
+
+G 1	H	Hydrogen
+G 2	He	Helium
+G 3	Li	Lithium
+G 4	Be	Beryllium
+G 5	B	Boron
+G 6	C	Carbon
+G 7	N	Nitrogen
+G 8	O	Oxygen
+G 9	F	Fluorine
+G 10	Ne	Neon
+G 11	Na	Sodium
+G 12	Mg	Magnesium
+G 13	Al	Aluminium
+G 14	Si	Silicon
+G 15	P	Phosphorus
+G 16	S	Sulfur
+G 17	Cl	Chlorine
+G 18	Ar	Argon
+G 19	K	Potassium
+G 20	Ca	Calcium
+G 21	Sc	Scandium
+G 22	Ti	Titanium
+G 23	V	Vanadium
+G 24	Cr	Chromium
+G 25	Mn	Manganese
+G 26	Fe	Iron
+G 27	Co	Cobalt
+G 28	Ni	Nickel
+G 29	Cu	Copper
+G 30	Zn	Zinc
+G 31	Ga	Gallium
+G 32	Ge	Germanium
+G 33	As	Arsenic
+G 34	Se	Selenium
+G 35	Br	Bromine
+G 36	Kr	Krypton
+G 37	Rb	Rubidium
+G 38	Sr	Strontium
+G 39	Y	Yttrium
+G 40	Zr	Zirconium
+G 41	Nb	Niobium
+G 42	Mo	Molybdenum
+G 43	Tc	Technetium
+G 44	Ru	Ruthenium
+G 45	Rh	Rhodium
+G 46	Pd	Palladium
+G 47	Ag	Silver
+G 48	Cd	Cadmium
+G 49	In	Indium
+G 50	Sn	Tin
+G 51	Sb	Antimony
+G 52	Te	Tellurium
+G 53	I	Iodine
+G 54	Xe	Xenon
+G 55	Cs	Caesium
+G 56	Ba	Barium
+G 57	La	Lanthanum
+G 58	Ce	Cerium
+G 59	Pr	Praseodymium
+G 60	Nd	Neodymium
+G 61	Pm	Promethium
+G 62	Sm	Samarium
+G 63	Eu	Europium
+G 64	Gd	Gadolinium
+G 65	Tb	Terbium
+G 66	Dy	Dysprosium
+G 67	Ho	Holmium
+G 68	Er	Erbium
+G 69	Tm	Thulium
+G 70	Yb	Ytterbium
+G 71	Lu	Lutetium
+G 72	Hf	Hafnium
+G 73	Ta	Tantalum
+G 74	W	Tungsten
+G 75	Re	Rhenium
+G 76	Os	Osmium
+G 77	Ir	Iridium
+G 78	Pt	Platinum
+G 79	Au	Gold
+G 80	Hg	Mercury
+G 81	Tl	Thallium
+G 82	Pb	Lead
+G 83	Bi	Bismuth
+G 84	Po	Polonium
+G 85	At	Astatine
+G 86	Rn	Radon
+G 87	Fr	Francium
+G 88	Ra	Radium
+G 89	Ac	Actinium
+G 90	Th	Thorium
+G 91	Pa	Protactinium
+G 92	U	Uranium
+G 93	Np	Neptunium
+G 94	Pu	Plutonium
+G 95	Am	Americium
+G 96	Cm	Curium
+G 97	Bk	Berkelium
+G 98	Cf	Californium
+G 99	Es	Einsteinium
+G 100	Fm	Fermium
+G 101	Md	Mendelevium
+G 102	No	Nobelium
+G 103	Lr	Lawrencium
+G 104	Rf	Rutherfordium
+G 105	Db	Dubnium
+G 106	Sg	Seaborgium
+G 107	Bh	Bohrium
+G 108	Hs	Hassium
+G 109	Mt	Meitnerium
+G 110	Ds	Darmstadtium
+G 111	Rg	Roentgenium
+G 112	Cn	Copernicium
+G 113	Uut	Ununtrium
+G 114	Uuq	Ununquadium
+G 115	Uup	Ununpentium
+G 116	Uuh	Ununhexium
+G 117	Uus	Ununseptium
+G 118	Uuo	Ununoctium

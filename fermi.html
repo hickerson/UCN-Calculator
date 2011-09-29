@@ -60,6 +60,18 @@ var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4
 // unit per m/s: m/s, cm/s, seconds
 var velocity_factors = new Array(5.2270385, 0.00052270385, 502.686);
 
+var element_data = {
+        Be: {   
+            { A: 9,  Z: 4, N: 5, mass: 9.1012182, conc: 100, cohb: 7.79, incb: 0.12, cohxs: 7.63, incxs: 0.0018, scaxs: 7.63, abs: 0.0076 }
+        }
+        Ca: {
+            { A: 40, Z: 20, N: 20, mass: 40, conc: 96.941, cohb: 4.80,  incb: 0, cohxs: 2.9,  incxs: 0,   scaxs: 2.9,  abs: 0.41 },
+            { A: 42, Z: 20, N: 22, mass: 42, conc: 0.647,  cohb: 3.36,  incb: 0, cohxs: 1.42, incxs: 0,   scaxs: 1.42, abs: 0.68 },
+            { A: 43, Z: 20, N: 23, mass: 43, conc: 0.135,  cohb: -1.56, incb: 0, cohxs: 0.31, incxs: 0.5, scaxs: 0.8,  abs: 6.2 }
+        }
+    }
+
+
 function make_unit_select()
 {
 	var i = 0;
@@ -124,51 +136,57 @@ function convert_fermipotential()
 <h1>UCN Units Calculator</h1>
 <hr>
 <p>
-<b>1</b> Enter a numeric value or simple expression.
+<b>Instructions</b>
+<ol>
+    <li> Enter a numeric value or simple expression.</li>
+    <li> Select UCN units from the dropdown lists. </li>
+    <li> Click the "Calculate" button. </li>
+</ol>
 <br />
-<b>2</b> Select UCN units from the dropdown lists.
-<br />
-<b>3</b> Click the "Calculate" button.
 <p><form name="ucn_calc">
 <table>
-        <tr>
-                <td>A UCN that </td>
-                <td><div id="from_words">has energy</div></td>
-                <td><input type="text" name="fermi_from_value" value="1" size="8" maxlength="12"></td>
-                <td>
-                        <select name=from_unit onChange="convert_ucn_unit()";>
-				<script> make_unit_select(); </script>
-                        </select>
-                </td>
-                <td><div id="fermi_to_words">has energy</div></td>
-                <td><div id="fermi_to_value">1</div></td>
-                <td>
-                        <select name=to_unit onChange="convert_ucn_unit()";>
-				<script> make_unit_select(); </script>
-                        </select>
-                </td>
-                <td> <input type=button value="Calculate" onClick="convert_ucn_unit()";> </td>
-        </tr>
+    <tr>
+        <td>A UCN that </td>
+        <td><div id="from_words">has energy</div></td>
+        <td>
+            <input type="text" name="fermi_from_value" value="1" size="8" maxlength="12">
+        </td>
+        <td>
+            <select name=from_unit onChange="convert_ucn_unit()">
+                <script> make_unit_select(); </script>
+            </select>
+        </td>
+        <td><div id="fermi_to_words">has energy</div></td>
+        <td><div id="fermi_to_value">1</div></td>
+        <td>
+            <select name=to_unit onChange="convert_ucn_unit()">
+                <script> make_unit_select(); </script>
+            </select>
+        </td>
+        <td> 
+            <input type=button value="Calculate" onClick="convert_ucn_unit()"> 
+        </td>
+    </tr>
 </table>
 <br/>
 <table>
-        <tr>
-                <td>The Fermi potential of </td>
-                <td>
-                        <select name=fermi_element onChange="convert_fermipotential()";>
-				<script> make_fermi_select(); </script>
-                        </select>
-                </td>
-		<td> can trap a UCN that </td>
-                <td><div id="to_fermi_words">has energy</div></td>
-                <td><div id="to_fermi_value">252</div></td>
-                <td>
-                        <select name=to_fermi onChange="convert_fermipotential()";>
-				<script> make_unit_select(); </script>
-                        </select>
-                </td>
-                <td> <input type=button value="Calculate" onClick="convert_fermipotential()";> </td>
-        </tr>
+    <tr>
+        <td>The Fermi potential of </td>
+        <td>
+            <select name=fermi_element onChange="convert_fermipotential()">
+                <script> make_fermi_select(); </script>
+            </select>
+        </td>
+    <td> can trap a UCN that </td>
+        <td><div id="to_fermi_words">has energy</div></td>
+        <td><div id="to_fermi_value">252</div></td>
+        <td>
+                <select name=to_fermi onChange="convert_fermipotential()">
+        <script> make_unit_select(); </script>
+                </select>
+        </td>
+        <td> <input type=button value="Calculate" onClick="convert_fermipotential()"> </td>
+    </tr>
 </table>
 </form>
 

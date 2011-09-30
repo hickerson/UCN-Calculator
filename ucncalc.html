@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>UCN Calculator</title>
+<link rel="icon" href="http://www.caltech.edu/favicon.ico" type="image/icon">
+<link rel="stylesheet" href="http://www.caltech.edu/aux/main.css" type="text/css">
+<meta name="keywords" content="ultra cold neutrons, ultracold neutrons, UCN research, science, engineering, technology">
+
+<script language='JavaScript1.2' src='http://www.caltech.edu/aux/dynamic-images.js'></script>
+<script language='JavaScript1.2' src='http://www.caltech.edu/aux/image-functions.js'></script>
+<script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
+
+<script type="text/javascript">
+
+// Length Converter script- By Bruce Zhang
+// For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/
+// Please keep this notice intact
+
+var length_factors1 = new Array(1, 0.01, 0.00001, 0.00000621, 0.3937, 0.0328, 0.01094);
+var length_factors2 = new Array(100, 1, 0.001, 0.000621, 39.37, 3.28,  1.094);
+var length_factors3 = new Array(100000, 1000, 1, 0.621, 39370, 3280, 1094);
+var length_factors4 = new Array(160934, 1609.34, 1.60934, 1, 63360, 5280,1760);
+var length_factors5 = new Array(2.54, 0.0254, 0.0000254, 0.0000158, 1, 0.08333, 0.02778);
+var length_factors6 = new Array(30.48, 0.3048, 0.0003048, 0.0001896, 12, 1, 0.3333);
+var length_factors7 = new Array(91.44, 0.9144, 0.0009144, 0.0005688, 36, 3, 1);
+var length_factors = new Array(length_factors1,length_factors2,length_factors3,length_factors4,length_factors5,length_factors6,length_factors7);
+
+function convert_length_unit()
+{
+	from_index = document.length_con.from_unit.selectedIndex;
+	to_index = document.length_con.to_unit.selectedIndex;
+	factor = length_factors[from_index][to_index];
+	document.getElementById("length_formula").innerHTML = "(1 " + document.length_con.from_unit.options[document.length_con.from_unit.selectedIndex].text + " = " + factor + " " + document.length_con.to_unit.options[document.length_con.to_unit.selectedIndex].text + ")";
+	if(isNaN(document.length_con.from_value.value))
+		document.getElementById("to_value").innerHTML = "Not a valid number.";
+	else
+		document.getElementById("to_value").innerHTML = factor * document.length_con.from_value.value;
+}
+
+var unit_count = 10;
+var ucn_unit = new Array("neV","Tesla","Gauss","meters","cm","Kelvin","mK","m/s","cm/s","seconds");
+var unit_words = new Array("has energy", 
+                           "is repelled by a field of",
+                           "is repelled by a field of",
+                           "falls from",
+                           "falls from",
+                           "has temperature",
+                           "has temperature",
+                           "is moving at",
+                           "is moving at",
+                           "apogees in");
+var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
+                                         "Graphite", "Iron", "Copper", "Aluminum");
+var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+
+// unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
+var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4, 86.1734);
+
+// unit per m/s: m/s, cm/s, seconds
+var velocity_factors = new Array(5.2270385, 0.00052270385, 502.686);
+
+function make_unit_select()
+{
+	var i = 0;
+	for (i = 0; i < unit_count; i++)
+		document.write( "<option> " + ucn_unit[i] );
+}
+
+function make_fermi_select()
+{
+	var i = 0;
+	for (i = 0; i < Fermi_potential_elements.length; i++)
+		document.write( "<option> " + Fermi_potential_elements[i] );
+}
+
+function convert_ucn_unit()
+{
+	from_index = document.ucn_calc.from_unit.selectedIndex;
+	to_index = document.ucn_calc.to_unit.selectedIndex;
+	document.getElementById("from_words").innerHTML = unit_words[from_index];
+	document.getElementById("to_words").innerHTML = unit_words[to_index];
+	from_value = eval(document.ucn_calc.from_value.value);
+	if(isNaN(from_value))
+		document.getElementById("to_value").innerHTML = "?";
+	else
+	{
+		//factor = energy_factors[from_index]/energy_factors[to_index];
+		//to_value = factor * from_value;
+		if(from_index < 7)
+			energy_neV = energy_factors[from_index] * from_value;
+		else
+			energy_neV = velocity_factors[from_index-7] * from_value * from_value;
+		if(to_index < 7)
+			to_value = energy_neV / energy_factors[to_index];
+		else
+			to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
+	        document.getElementById("to_value").innerHTML = to_value.toPrecision(6);
+        }
+}
+
+function convert_fermipotential()
+{
+	from_index = document.ucn_calc.fermi_element.selectedIndex;
+	to_index = document.ucn_calc.to_fermi.selectedIndex;
+	document.getElementById("to_fermi_words").innerHTML = unit_words[to_index];
+	energy_neV = Fermi_potentials[from_index];
+	if(to_index < 7)
+		to_value = energy_neV / energy_factors[to_index];
+	else
+		to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
+	document.getElementById("to_fermi_value").innerHTML = to_value.toPrecision(3);
+}
+</script>
+
+</head>
+
+<body bgcolor=white onload="resetSearch()";>
+<!-- header -->	
+<script language='JavaScript1.2' src='http://www.caltech.edu/aux/header.js'></script>
+
+<!-- content -->
+
+<h1>UCN Units Calculator</h1>
+<hr>
+<p>
+<b>1</b> Enter a numeric value or simple expression.
+<br />
+<b>2</b> Select UCN units from the dropdown lists.
+<br />
+<b>3</b> Click the "Calculate" button.
+<p><form name="ucn_calc">
+<table>
+        <tr>
+                <td>A UCN that </td>
+                <td><div id="from_words">has energy</div></td>
+                <td><input type="text" name="fermi_from_value" value="1" size="8" maxlength="12"></td>
+                <td>
+                        <select name=from_unit onChange="convert_ucn_unit()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td><div id="fermi_to_words">has energy</div></td>
+                <td><div id="fermi_to_value">1</div></td>
+                <td>
+                        <select name=to_unit onChange="convert_ucn_unit()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td> <input type=button value="Calculate" onClick="convert_ucn_unit()";> </td>
+        </tr>
+</table>
+<br/>
+<table>
+        <tr>
+                <td>The Fermi potential of </td>
+                <td>
+                        <select name=fermi_element onChange="convert_fermipotential()";>
+				<script> make_fermi_select(); </script>
+                        </select>
+                </td>
+		<td> can trap a UCN that </td>
+                <td><div id="to_fermi_words">has energy</div></td>
+                <td><div id="to_fermi_value">252</div></td>
+                <td>
+                        <select name=to_fermi onChange="convert_fermipotential()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td> <input type=button value="Calculate" onClick="convert_fermipotential()";> </td>
+        </tr>
+</table>
+</form>
+
+<br>
+<br>
+<h1>Fermi Potential Calculation</h1>
+<hr>
+
+<p><form name="fermi_calc">
+<table>
+        <tr>
+                <td>A UCN that </td>
+                <td><div id="fermi_from_words">has energy</div></td>
+                <td><input type="text" name="fermi_from_value" value="1" size="8" maxlength="12"></td>
+                <td>
+                        <select name=from_unit onChange="convert_ucn_unit()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td><div id="to_words">has energy</div></td>
+                <td><div id="to_value">1</div></td>
+                <td>
+                        <select name=to_unit onChange="convert_ucn_unit()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td> <input type=button value="Calculate" onClick="convert_ucn_unit()";> </td>
+        </tr>
+</table>
+<br/>
+<table>
+        <tr>
+                <td>The Fermi potential of </td>
+                <td>
+                        <select name=fermi_element onChange="convert_fermipotential()";>
+				<script> make_fermi_select(); </script>
+                        </select>
+                </td>
+		<td> can trap a UCN that </td>
+                <td><div id="to_fermi_words">has energy</div></td>
+                <td><div id="to_fermi_value">252</div></td>
+                <td>
+                        <select name=to_fermi onChange="convert_fermipotential()";>
+				<script> make_unit_select(); </script>
+                        </select>
+                </td>
+                <td> <input type=button value="Calculate" onClick="convert_fermipotential()";> </td>
+        </tr>
+</table>
+</form>
+
+<br>
+<br>
+<h1>Standard Length Converter</h1>
+<hr>
+
+<p>
+<b>1</b> Enter a numeric value, and select length units from the "From" the "To" dropdown list.
+<br />
+<b>2</b> Click the "Calculate" button.
+<p><form name="length_con">
+<table>
+	<tr>
+		<td>From </td>
+		<td><input type="text" name="from_value" value="1" size="12" maxlength="12"></td>
+		<td>
+			<select name=from_unit onChange="convert_length_unit()";>
+			<option> centimeters
+			<option> meters
+			<option> kilometers
+			<option> miles
+			<option> inches
+			<option> feet
+			<option> yards
+			</select>
+		</td>
+		<td> &nbsp; to &nbsp; </td>
+		<td size="12"><div id="to_value">1</div></td>
+		<td>
+			<select name=to_unit onChange="convert_length_unit()";>
+			<option> centimeters
+			<option> meters
+			<option> kilometers
+			<option> miles
+			<option> inches
+			<option> feet
+			<option> yards
+			</select>
+		</td>
+		<td><input type=button value="Calculate" onClick="convert_length_unit()";> </td>
+		<td> </td><td colspan="3"><div id="length_formula">(centimeters = 1 centimeters)</div></td>
+	</tr>
+</table>
+</form>
+
+<br>
+<br>
+<h1>Simple Calculator</h1>
+<hr>
+<p>
+<FORM NAME="Calc">
+<TABLE BORDER=4>
+<TR>
+<TD>
+<INPUT TYPE="text"   NAME="Input" Size="24">
+<br>
+</TR>
+<TR>
+<TD>
+<INPUT TYPE="button" NAME="one"   VALUE="  1  " OnClick="Calc.Input.value += '1'">
+<INPUT TYPE="button" NAME="two"   VALUE="  2  " OnCLick="Calc.Input.value += '2'">
+<INPUT TYPE="button" NAME="three" VALUE="  3  " OnClick="Calc.Input.value += '3'">
+<INPUT TYPE="button" NAME="plus"  VALUE="  +  " OnClick="Calc.Input.value += ' + '">
+<br>
+<INPUT TYPE="button" NAME="four"  VALUE="  4  " OnClick="Calc.Input.value += '4'">
+<INPUT TYPE="button" NAME="five"  VALUE="  5  " OnCLick="Calc.Input.value += '5'">
+<INPUT TYPE="button" NAME="six"   VALUE="  6  " OnClick="Calc.Input.value += '6'">
+<INPUT TYPE="button" NAME="minus" VALUE="  -  " OnClick="Calc.Input.value += ' - '">
+<br>
+<INPUT TYPE="button" NAME="seven" VALUE="  7  " OnClick="Calc.Input.value += '7'">
+<INPUT TYPE="button" NAME="eight" VALUE="  8  " OnCLick="Calc.Input.value += '8'">
+<INPUT TYPE="button" NAME="nine"  VALUE="  9  " OnClick="Calc.Input.value += '9'">
+<INPUT TYPE="button" NAME="times" VALUE="  x  " OnClick="Calc.Input.value += ' * '">
+<br>
+<INPUT TYPE="button" NAME="clear" VALUE="  c  " OnClick="Calc.Input.value = ''">
+<INPUT TYPE="button" NAME="zero"  VALUE="  0  " OnClick="Calc.Input.value += '0'">
+<INPUT TYPE="button" NAME="DoIt"  VALUE="  =  " OnClick="Calc.Input.value = eval(Calc.Input.value)">
+<INPUT TYPE="button" NAME="div"   VALUE="  /  " OnClick="Calc.Input.value += ' / '">
+<br>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+
+<!-- footer -->	
+<hr/>
+<p align='right'>
+<table border=0 width=100%>
+<tr>
+<td align="left">
+Last updated June 26, 2008
+</td>
+<td align="right">
+&copy; 2008 Kevin Hickerson
+</td>
+</tr>
+</table>
+</p>
+<br/>
+<br/>
+<br/>
+
+<script language='JavaScript1.2' src='http://www.caltech.edu/aux/footer.js'></script> 
+
+</body>
+
+</html>
+

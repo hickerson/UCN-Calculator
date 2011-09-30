@@ -32,10 +32,11 @@ while (<F>)
       my $scattxs = $8;
       my $absxs = $9;
 
-      $incb = 0 if $incb eq '---';
-      $cohb = 'null' if $cohb eq '---';
-      $cohxs = 'null' if $cohxs eq '---';
-      $scattxs = 'null' if $scattxs eq '---';
+      $incb = 0 if $incb*1 eq $incb;
+      $cohb = 0 if $cohb*1 eq $cohb;
+      $cohxs = 0 if $cohxs*1 eq $cohxs;
+      $scattxs = 0 if $scattxs*1 eq $scattxs;
+      $absxs = 0 if $absxs*1 eq $absxs;
 
       if ($nucleons eq '') {
         print "     $isotope: {Z: $protons, cohb: $cohb, incb: $incb, cohxs: $cohxs, incxs: $incxs, scaxs: $scattxs, abs: $absxs },\n"

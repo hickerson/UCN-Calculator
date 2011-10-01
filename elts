@@ -6,8 +6,8 @@ G ()
   elt="$2"
   eltname="$3"
   lcelt=`echo "$2" | tr A-Z a-z`
-  if test -r "isotope-$2.html" || wget -q -O isotope-$2.html "http://www.ncnr.nist.gov/resources/n-lengths/elements/$lcelt.html" ; then
-    perl parse-tope-info.pl isotope-$2.html $z
+  if test -r "isotope-$2.html" || wget -q -O nist/isotope-$2.html "http://www.ncnr.nist.gov/resources/n-lengths/elements/$lcelt.html" ; then
+    perl parse-tope-info.pl nist/isotope-$2.html $z
   else
     echo "no isotope page for $2" 1>&2
   fi

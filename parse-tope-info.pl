@@ -19,34 +19,40 @@ while (<F>)
 
     s/\<i\>i\<\/i\>//g;
 
-                    # tope                  conc               cohb              incb               cohxs               incxs            scattxs                absxs
+    # tope    conc    cohb    incb    cohxs    incxs    scattxs    absxs
     if (/^<td>\s*(\d*)([A-Z][a-z]*)\s*<td>\s*([^<]*?)\s*<td>\s*([^<\s]+)\s*<td>\s*([^<\s]+)\s*<td>\s*([^<\s]+)\s*<td>\s*([^<\s]+)\s*<td>\s*([^<\s]+)\s*<td>\s*(\<?[^<\s]+)\s*<tr>/) {
       my $nucleons = $1;
       my $element = $2;
       my $isotope = "$2$1";
-      my $conc = $3;
-      my $cohb = $4;
-      my $incb = $5;
-      my $cohxs = $6;
-      my $incxs = $7;
-      my $scattxs = $8;
-      my $absxs = $9;
-
-      $incb = 0 if $incb*1 eq $incb;
-      $cohb = 0 if $cohb*1 eq $cohb;
-      $cohxs = 0 if $cohxs*1 eq $cohxs;
-      $scattxs = 0 if $scattxs*1 eq $scattxs;
-      $absxs = 0 if $absxs*1 eq $absxs;
+      my $conc = clean_num($3);
+      my $cohb = clean_num($4);
+      my $incb = clean_num($5);
+      my $cohxs = clean_num($6);
+      my $incxs = clean_num($7);
+      my $scattxs = clean_num($8);
+      my $absxs = clean_num($9);
 
       if ($nucleons eq '') {
-        print "     $isotope: {Z: $protons, cohb: $cohb, incb: $incb, cohxs: $cohxs, incxs: $incxs, scaxs: $scattxs, abs: $absxs },\n"
+        print "     $isotope: {Z: $protons, ";
       } else {
         $neutrons = $nucleons - $protons;
         $mass = $nucleons; 
-        print "     $isotope: { A: $nucleons, Z: $protons, N: $neutrons, mass: $mass, conc: $conc, cohb: $cohb, incb: $incb, cohxs: $cohxs, incxs: $incxs, scaxs: $scattxs, abs: $absxs },\n"
+        print "     $isotope: {Z: $protons, ";
+        print "A: $nucleons, N: $neutrons, mass: '$mass', conc: '$conc', ";
       }
+      print "cohb: '$cohb', incb: '$incb', cohxs: '$cohxs', incxs: '$incxs', scaxs: '$scattxs', abs: '$absxs' },\n"
     } else {
         warn "error parsing line $_";
     }
 }
+
+sub clean_num {
+    my $arg = shift;
+    if ($arg eq "---") {
+        return "null";
+    } else {
+        return $arg;
+    }
+}
+
 #print "      },\n" if $in_table;

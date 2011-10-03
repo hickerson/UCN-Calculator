@@ -13,6 +13,7 @@ G ()
   fi
 }
 
+echo "var isotopes = {"
 G 1	H	Hydrogen
 G 2	He	Helium
 G 3	Li	Lithium
@@ -131,3 +132,4 @@ G 115	Uup	Ununpentium
 G 116	Uuh	Ununhexium
 G 117	Uus	Ununseptium
 G 118	Uuo	Ununoctium
+echo "}"

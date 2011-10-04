@@ -28,11 +28,9 @@ var unit_words = new Array("has energy",
                            "is moving at",
                            "is moving at",
                            "apogees in");
-/*
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
 var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
-*/
 
 // unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
 var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4, 86.1734);
@@ -110,7 +108,7 @@ function convert_fermipotential()
     <li> Click the "Calculate" button. </li>
 </ol>
 <br />
-<p><form id="unit" name="unit">
+<p><form id="ucn-calc" name="ucn-calc">
 <table>
     <tr>
         <td>A UCN that </td>
@@ -144,6 +142,7 @@ function convert_fermipotential()
 </form>
 
 <script>
+    /*
     $("select").change(function () {
         var str = "";
         $("select option:selected").each(function () {
@@ -152,6 +151,7 @@ function convert_fermipotential()
         $("div").text(str);
     })
     .trigger('change');
+    */
 </script>
 
 <br>

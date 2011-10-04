@@ -15,14 +15,6 @@
 
 <script type="text/javascript">
 
-var length_factors1 = new Array(1, 0.01, 0.00001, 0.00000621, 0.3937, 0.0328, 0.01094);
-var length_factors2 = new Array(100, 1, 0.001, 0.000621, 39.37, 3.28,  1.094);
-var length_factors3 = new Array(100000, 1000, 1, 0.621, 39370, 3280, 1094);
-var length_factors4 = new Array(160934, 1609.34, 1.60934, 1, 63360, 5280,1760);
-var length_factors5 = new Array(2.54, 0.0254, 0.0000254, 0.0000158, 1, 0.08333, 0.02778);
-var length_factors6 = new Array(30.48, 0.3048, 0.0003048, 0.0001896, 12, 1, 0.3333);
-var length_factors7 = new Array(91.44, 0.9144, 0.0009144, 0.0005688, 36, 3, 1);
-var length_factors = new Array(length_factors1,length_factors2,length_factors3,length_factors4,length_factors5,length_factors6,length_factors7);
 
 var unit_count = 10;
 var ucn_unit = new Array("neV","Tesla","Gauss","meters","cm","Kelvin","mK","m/s","cm/s","seconds");
@@ -36,9 +28,11 @@ var unit_words = new Array("has energy",
                            "is moving at",
                            "is moving at",
                            "apogees in");
+/*
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
 var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+*/
 
 // unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
 var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4, 86.1734);
@@ -62,17 +56,15 @@ function make_fermi_select()
 
 function convert_ucn_unit()
 {
-	var from_index = $("#from_unit").attr("selectedIndex");
-	var to_index = $("#to_unit").attr("selectedIndex");
-	$("#from_words").innerHTML = unit_words[from_index];
-    $("#to_words").innerHTML = unit_words[to_index];
-	var from_value = eval($("#general_ucn_calc input.from_value").val());
+	var from_index = $("select[name='from-unit']").attr("selectedIndex");
+	var to_index = $("select[name='to-unit']").attr("selectedIndex");
+	$("#ucn-calc .from-words").innerHTML = unit_words[from_index];
+    $("#ucn-calc .to-words").innerHTML = unit_words[to_index];
+	var from_value = eval($("#ucn-calc .from-value").val());
 	if(isNaN(from_value))
-		$("#to_value").innerHTML = "?";
+		$("#ucn-calc .to-value").innerHTML = "?";
 	else
 	{
-		//factor = energy_factors[from_index]/energy_factors[to_index];
-		//to_value = factor * from_value;
 		if(from_index < 7)
 			energy_neV = energy_factors[from_index] * from_value;
 		else
@@ -81,45 +73,22 @@ function convert_ucn_unit()
 			to_value = energy_neV / energy_factors[to_index];
 		else {
 			to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
-	        $("#to_value").innerHTML = to_value.toPrecision(6);
+	        $("#ucn-calc .to-value").innerHTML = to_value.toPrecision(6);
         }
     }
-    /*
-	from_index = document.ucn_calc.from_unit.selectedIndex;
-	to_index = document.ucn_calc.to_unit.selectedIndex;
-	document.getElementById("from_words").innerHTML = unit_words[from_index];
-	document.getElementById("to_words").innerHTML = unit_words[to_index];
-	from_value = eval(document.ucn_calc.from_value.value);
-	if(isNaN(from_value))
-		document.getElementById("to_value").innerHTML = "?";
-	else
-	{
-		//factor = energy_factors[from_index]/energy_factors[to_index];
-		//to_value = factor * from_value;
-		if(from_index < 7)
-			energy_neV = energy_factors[from_index] * from_value;
-		else
-			energy_neV = velocity_factors[from_index-7] * from_value * from_value;
-		if(to_index < 7)
-			to_value = energy_neV / energy_factors[to_index];
-		else
-			to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
-	        document.getElementById("to_value").innerHTML = to_value.toPrecision(6);
-        }
-        */
 }
 
 function convert_fermipotential()
 {
-	from_index = document.ucn_calc.fermi_element.selectedIndex;
-	to_index = document.ucn_calc.to_fermi.selectedIndex;
-	document.getElementById("to_fermi_words").innerHTML = unit_words[to_index];
+	var from_index = $("select[name='from-fermi-element']").attr("selectedIndex");
+	var to_index = $("select[name='to-fermi']").attr("selectedIndex");
+	$("#to-fermi-words").innerHTML = unit_words[to_index];
 	energy_neV = Fermi_potentials[from_index];
 	if(to_index < 7)
 		to_value = energy_neV / energy_factors[to_index];
 	else
 		to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
-	document.getElementById("to_fermi_value").innerHTML = to_value.toPrecision(3);
+	$("#to-fermi-value").innerHTML = to_value.toPrecision(3);
 }
 </script>
 
@@ -141,23 +110,29 @@ function convert_fermipotential()
     <li> Click the "Calculate" button. </li>
 </ol>
 <br />
-<p><form id="general_ucn_calc" name="UCN Calculator">
+<p><form id="unit" name="unit">
 <table>
     <tr>
         <td>A UCN that </td>
-        <td><div class="from_words">has energy</div></td>
         <td>
-            <input class="from_value" type="text" value="1" size="8" maxlength="12">
+            <div class="from-words">has energy</div>
         </td>
         <td>
-            <select class="from_unit" onChange="convert_ucn_unit()">
+            <input name="unit-from-value" type="text" value="1" size="8" maxlength="12">
+        </td>
+        <td>
+            <select name="from-unit" onChange="convert_ucn_unit()">
                 <script> make_unit_select(); </script>
             </select>
         </td>
-        <td><div class="to_words">has energy</div></td>
-        <td><div class="to_value">1</div></td>
         <td>
-            <select name="to_unit" onChange="convert_ucn_unit()">
+            <div class="to-words">has energy</div>
+        </td>
+        <td>
+            <div class="to-value">1</div>
+        </td>
+        <td>
+            <select name="to-unit" onChange="convert_ucn_unit()">
                 <script> make_unit_select(); </script>
             </select>
         </td>
@@ -166,79 +141,49 @@ function convert_fermipotential()
         </td>
     </tr>
 </table>
-<br/>
-<table>
-    <tr>
-        <td>The Fermi potential of </td>
-        <td>
-            <select name="fermi_element" onChange="convert_fermipotential()">
-                <script> make_fermi_select(); </script>
-            </select>
-        </td>
-    <td> can trap a UCN that </td>
-        <td><div id="to_fermi_words">has energy</div></td>
-        <td><div id="to_fermi_value">252</div></td>
-        <td>
-            <select name="to_fermi" onChange="convert_fermipotential()">
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-        <td> <input type="button" value="Calculate" onClick="convert_fermipotential()"> </td>
-    </tr>
-</table>
 </form>
+
+<script>
+    $("select").change(function () {
+        var str = "";
+        $("select option:selected").each(function () {
+            str += $(this).text() + " ";
+        });
+        $("div").text(str);
+    })
+    .trigger('change');
+</script>
 
 <br>
 <br>
 <h1>Fermi Potential Calculation</h1>
 <hr>
 
-<p><form name="fermi_calc">
-<table>
-    <tr>
-        <td>A UCN that </td>
-        <td><div id="fermi_from_words">has energy</div></td>
-        <td><input type="text" name="fermi_from_value" value="1" size="8" maxlength="12"></td>
-        <td>
-            <select name=from_unit onChange="convert_ucn_unit()";>
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-        <td><div id="to_words">has energy</div></td>
-        <td><div id="to_value">1</div></td>
-        <td>
-            <select name=to_unit onChange="convert_ucn_unit()";>
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-        <td> <input type=button value="Calculate" onClick="convert_ucn_unit()";> </td>
-    </tr>
-</table>
-<br/>
+<p><form name="fermi-calc">
 <table>
     <tr>
         <td>The Fermi potential of </td>
         <td>
-            <select name=fermi_element onChange="convert_fermipotential()";>
+            <select name="fermi-element" onChange="convert_fermipotential()";>
                 <script> make_fermi_select(); </script>
             </select>
         </td>
     <td> can trap a UCN that </td>
-        <td><div id="to_fermi_words">has energy</div></td>
-        <td><div id="to_fermi_value">252</div></td>
+        <td><div id="to-fermi-words">has energy</div></td>
+        <td><div id="to-fermi-value">252</div></td>
         <td>
-            <select name=to_fermi onChange="convert_fermipotential()";>
+            <select name="to-fermi" onChange="convert_fermipotential()";>
                 <script> make_unit_select(); </script>
             </select>
         </td>
-        <td> <input type=button value="Calculate" onClick="convert_fermipotential()";> </td>
+        <td> <input type="button" value="Calculate" onClick="convert_fermipotential()";> </td>
     </tr>
 </table>
 </form>
 
 <!-- footer -->	
 <hr/>
-<p align='right'>
+<p align="right">
 <table border=0 width=100%>
 <tr>
 <td align="left">

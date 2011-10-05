@@ -11,6 +11,7 @@
 <script language='JavaScript' src='http://www.caltech.edu/aux/dynamic-images.js'></script>
 <script language='JavaScript' src='http://www.caltech.edu/aux/image-functions.js'></script>
 <script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
+
 <script language='JavaScript' src='isotopes.js'></script>
 <script language='JavaScript' src='units.js'></script>
 
@@ -29,11 +30,6 @@ function make_unit_select()
 
 function make_fermi_select()
 {
-    /*
-	var i = 0;
-	for (i = 0; i < Fermi_potential_elements.length; i++)
-		document.write( "<option> " + Fermi_potential_elements[i] );
-        */
 	for (var key in isotopes)
 		document.write( "<option> " + key );
 }
@@ -141,14 +137,19 @@ function convert_fermi_potential()
                 <script> make_fermi_select(); </script>
             </select>
         </td>
-    <td> can trap a UCN that </td>
+        <td> can trap a UCN that </td>
         <td><div id="to-fermi-words">has energy</div></td>
-        <td><div id="to-fermi-value">252</div></td>
+        <td><div id="to-fermi-value">...</div></td>
         <td>
             <select id="to-fermi-select" onChange="convert_fermi_potential()";>
                 <script> make_unit_select(); </script>
             </select>
         </td>
+    </tr>
+    <tr>
+        <td>has density <span id="isotope-density">...</span></td>
+    </tr>
+    <tr>
         <td> <input type="button" value="Calculate" onClick="convert_fermi_potential()";> </td>
     </tr>
 </table>

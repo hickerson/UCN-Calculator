@@ -14,6 +14,15 @@ while (<F>)
     last;
   }
 }
+
+open T, "<isotope-masses" or die "could not open isotope-masses";
+my %isotope_masses = ();
+while (<T>) {
+  /^([A-Z][a-z]*\d+) ([\d\.]+)/ or die;
+  $isotope_masses{$1} = $2;
+}
+close T;
+
   
 while (<F>)
 {
@@ -41,7 +50,9 @@ while (<F>)
       } else {
         $neutrons = $nucleons - $protons;
         $mass = $nucleons; 
-        print "A: $nucleons, N: $neutrons, mass: '$mass', conc: '$conc', ";
+        print "A: $nucleons, N: $neutrons, conc: '$conc', ";
+        my $im = $isotope_masses{$isotope};
+	print "mass: $im, " if defined $im;
       }
       print "'cohb': '$cohb', incb: '$incb', cohxs: '$cohxs', incxs: '$incxs', scaxs: '$scattxs', abs: '$absxs' },\n"
     } else {

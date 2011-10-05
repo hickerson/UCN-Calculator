@@ -16,63 +16,6 @@
 
 <script type="text/javascript">
 
-// unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
-// unit per m/s: m/s, cm/s, seconds
-/*
-var unit = {
-    "neV" : {
-        words: "has energy", 
-        exp: 1, 
-        coef: 1
-    },
-    "Tesla" : {
-        words: "is repelled by a field of",
-        exp: 1, 
-        coef: 60.3077
-    },
-    "Gauss" : {
-        words:  "is repelled by a field of",
-        exp: 1, 
-        coef: 0.00603077
-    },
-    "meters" : {
-        words:  "falls from",
-        exp: 1, 
-        coef: 102.519
-    },
-    "cm" : {
-        words:  "falls from",
-        exp: 1, 
-        coef: 1.02519
-    },
-    "Kelvin" : {
-        words: "has temperature",
-        exp: 1, 
-        coef: 86173.4
-    },
-    "mK" : {
-        words: "has temperature",
-        exp: 1, 
-        coef: 86.1734
-    },
-    "m/s" : {
-        words: "is moving at",
-        exp: 2, 
-        coef: 5.2270385
-    },
-    "cm/s" : {
-        words: "is moving at",
-        exp: 2, 
-        coef: 0.00052270385
-    },
-    "seconds": {
-        words: "reaches apogee in",
-        exp: 2, 
-        coef: 502.686
-    }
-};
-*/
-
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
 var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
@@ -117,23 +60,14 @@ function convert_ucn_unit()
 function convert_fermi_potential()
 {
 	var from_key = $("#from-fermi-select").val();
-	$("#to-fermi-value").html(from_key);
 
 	var to_key = $("#to-fermi-select").val();
 	$("#to-fermi-words").html(unit[to_key].words);
 	//energy_neV = Fermi_potentials[from_index];
-    //var energy_neV = 0; //isotopes[from_key].cohxs;
+    var energy_neV = isotopes[from_key].cohxs;
     
-
-/*
-	if(to_index < 7)
-		to_value = energy_neV / energy_factors[to_index];
-	else
-		to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
-*/
-
-	//to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
-	//$("#to-fermi-value").html(to_value.toPrecision(4));
+	to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
+	$("#to-fermi-value").html(to_value.toPrecision(4));
 	//$("#to-fermi-value").html(energy_neV);
 }
 </script>
@@ -203,7 +137,7 @@ function convert_fermi_potential()
     <tr>
         <td>The Fermi potential of </td>
         <td>
-            <select name="from-fermi-select" onChange="convert_fermi_potential()";>
+            <select id="from-fermi-select" onChange="convert_fermi_potential()";>
                 <script> make_fermi_select(); </script>
             </select>
         </td>

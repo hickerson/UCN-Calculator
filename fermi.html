@@ -150,7 +150,7 @@ function convert_ucn_unit()
 	else
 	{
 		energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
-		energy_neV = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
+		to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
         /*
 		if (from_index < 7)
 			energy_neV = energy_factors[from_index] * from_value;
@@ -166,8 +166,8 @@ function convert_ucn_unit()
         if (isNaN(to_value))
             $("#to-unit-value").html(from_index);
         else
-	    //$("#to-unit-value").html(to_value.toPrecision(6));
-	        $("#to-unit-value").html(to_value);
+	        $("#to-unit-value").html(to_value.toPrecision(6));
+	        //$("#to-unit-value").html(to_value);
     }
 }
 

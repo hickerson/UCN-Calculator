@@ -38,21 +38,62 @@ var units = {
 };
 */
 
-var words = {
-    "neV" : "has energy", 
-    "Tesla" : "is repelled by a field of",
-    "Gauss" : "is repelled by a field of",
-    "meters" : "falls from",
-    "cm" : "falls from",
-    "Kelvin" : "has temperature",
-    "mK" : "has temperature",
-    "m/s" : "is moving at",
-    "cm/s" : "is moving at",
-    "seconds": "reaches apogee in"
+var unit = {
+    "neV" : {
+        words: "has energy", 
+        exp: 1, 
+        coef: 1
+    },
+    "Tesla" : {
+        words: "is repelled by a field of",
+        exp: 1, 
+        coef: 60.3077
+    },
+    "Gauss" :{
+        words:  "is repelled by a field of",
+        exp: 1, 
+        coef: 0.00603077
+    },
+    "meters" :{
+        words:  "falls from",
+        exp: 1, 
+        coef: 102.519
+    },
+    "cm" :{
+        words:  "falls from",
+        exp: 1, 
+        coef: 1.02519
+    },
+    "Kelvin" : {
+        words: "has temperature",
+        exp: 1, 
+        coef: 86173.4
+    },
+    "mK" : {
+        words: "has temperature",
+        exp: 1, 
+        coef: 86.1734
+    },
+    "m/s" : {
+        words: "is moving at",
+        exp: 2, 
+        coef: 5.2270385
+    },
+    "cm/s" : {
+        words: "is moving at",
+        exp: 2, 
+        coef: 0.00052270385
+    },
+    "seconds": {
+        words: "reaches apogee in",
+        exp: 2, 
+        coef: 502.686
+    }
 };
 
 var unit_count = 10;
 var ucn_unit = new Array("neV","Tesla","Gauss","meters","cm","Kelvin","mK","m/s","cm/s","seconds");
+/*
 var unit_words = new Array("has energy", 
                            "is repelled by a field of",
                            "is repelled by a field of",
@@ -63,16 +104,21 @@ var unit_words = new Array("has energy",
                            "is moving at",
                            "is moving at",
                            "apogees in");
-
-var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
-                                         "Graphite", "Iron", "Copper", "Aluminum");
-var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+*/
 
 // unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
 var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4, 86.1734);
 
 // unit per m/s: m/s, cm/s, seconds
 var velocity_factors = new Array(5.2270385, 0.00052270385, 502.686);
+
+
+
+var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
+                                         "Graphite", "Iron", "Copper", "Aluminum");
+var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+
+
 
 function make_unit_select()
 {
@@ -92,11 +138,11 @@ function convert_ucn_unit()
 {
 	//var from_index = $("#from-unit-select").attr("selectedIndex");
 	var from_index = $("#from-unit-select").val();
-	$("#from-unit-words").html(unit_words[from_index]);
-	$("#from-unit-words").html("From index: " + from_index);
+	$("#from-unit-words").html(unit[from_index].words);
 
-	var to_index = $("#to-unit-select").attr("selectedIndex");
-    $("#to-unit-words").html(unit_words[to_index]);
+	//var to_index = $("#to-unit-select").attr("selectedIndex");
+	var to_index = $("#to-unit-select").val();
+    $("#to-unit-words").html(unit[to_index].words);
 
 	var from_value = $("#from-unit-value").val();
 	if(isNaN(from_value))
@@ -125,7 +171,7 @@ function convert_fermi_potential()
 {
 	var from_index = $("#from-fermi-select").attr("selectedIndex");
 	var to_index = $("#to-fermi-select").attr("selectedIndex");
-	$("#to-fermi-words").innerHTML = unit_words[to_index];
+	$("#to-fermi-words").html(unit[to_index].words);
 	energy_neV = Fermi_potentials[from_index];
 
 	if(to_index < 7)

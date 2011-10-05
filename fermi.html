@@ -149,6 +149,9 @@ function convert_ucn_unit()
 		$("#to-unit-value").html("?");
 	else
 	{
+		energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
+		energy_neV = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
+        /*
 		if (from_index < 7)
 			energy_neV = energy_factors[from_index] * from_value;
 		else
@@ -158,6 +161,7 @@ function convert_ucn_unit()
 			to_value = energy_neV / energy_factors[to_index];
 		else 
 			to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
+        */
 
         if (isNaN(to_value))
             $("#to-unit-value").html(from_index);

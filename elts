@@ -132,4 +132,4 @@ G 115	Uup	Ununpentium
 G 116	Uuh	Ununhexium
 G 117	Uus	Ununseptium
 G 118	Uuo	Ununoctium
-echo "}"
+echo "'end': 0};"

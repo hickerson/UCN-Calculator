@@ -32,15 +32,14 @@ while (<F>)
       my $scattxs = clean_num($8);
       my $absxs = clean_num($9);
 
+      print "     '$isotope': {Z: $protons, ";
       if ($nucleons eq '') {
-        print "     $isotope: {Z: $protons, ";
       } else {
         $neutrons = $nucleons - $protons;
         $mass = $nucleons; 
-        print "     $isotope: {Z: $protons, ";
         print "A: $nucleons, N: $neutrons, mass: '$mass', conc: '$conc', ";
       }
-      print "cohb: '$cohb', incb: '$incb', cohxs: '$cohxs', incxs: '$incxs', scaxs: '$scattxs', abs: '$absxs' },\n"
+      print "'cohb': '$cohb', incb: '$incb', cohxs: '$cohxs', incxs: '$incxs', scaxs: '$scattxs', abs: '$absxs' },\n"
     } else {
         warn "error parsing line $_";
     }

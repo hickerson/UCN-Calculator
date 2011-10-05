@@ -12,11 +12,13 @@
 <script language='JavaScript' src='http://www.caltech.edu/aux/image-functions.js'></script>
 <script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
 <script language='JavaScript' src='isotopes.js'></script>
+<script language='JavaScript' src='units.js'></script>
 
 <script type="text/javascript">
 
 // unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
 // unit per m/s: m/s, cm/s, seconds
+/*
 var unit = {
     "neV" : {
         words: "has energy", 
@@ -69,6 +71,7 @@ var unit = {
         coef: 502.686
     }
 };
+*/
 
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
@@ -113,11 +116,14 @@ function convert_ucn_unit()
 
 function convert_fermi_potential()
 {
-	//var from_index = $("#from-fermi-select").attr("selectedIndex");
-	var from_index = $("#from-fermi-select").val();
-	var to_index = $("#to-fermi-select").val();
-	$("#to-fermi-words").html(unit[to_index].words);
-	energy_neV = Fermi_potentials[from_index];
+	var from_key = $("#from-fermi-select").val();
+	$("#to-fermi-value").html(from_key);
+
+	var to_key = $("#to-fermi-select").val();
+	$("#to-fermi-words").html(unit[to_key].words);
+	//energy_neV = Fermi_potentials[from_index];
+    //var energy_neV = 0; //isotopes[from_key].cohxs;
+    
 
 /*
 	if(to_index < 7)
@@ -126,8 +132,9 @@ function convert_fermi_potential()
 		to_value = Math.sqrt( energy_neV / velocity_factors[to_index-7] );
 */
 
-	to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
-	$("#to-fermi-value").html(to_value.toPrecision(4));
+	//to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
+	//$("#to-fermi-value").html(to_value.toPrecision(4));
+	//$("#to-fermi-value").html(energy_neV);
 }
 </script>
 

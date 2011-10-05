@@ -15,7 +15,8 @@
 
 <script type="text/javascript">
 
-
+// unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
+// unit per m/s: m/s, cm/s, seconds
 var unit = {
     "neV" : {
         words: "has energy", 
@@ -69,14 +70,6 @@ var unit = {
     }
 };
 
-// unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
-//var energy_factors = new Array(1, 60.3077, 0.00603077, 102.519, 1.02519, 86173.4, 86.1734);
-
-// unit per m/s: m/s, cm/s, seconds
-//var velocity_factors = new Array(5.2270385, 0.00052270385, 502.686);
-
-
-
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
 var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
@@ -90,9 +83,13 @@ function make_unit_select()
 
 function make_fermi_select()
 {
+    /*
 	var i = 0;
 	for (i = 0; i < Fermi_potential_elements.length; i++)
 		document.write( "<option> " + Fermi_potential_elements[i] );
+        */
+	for (var key in isotopes)
+		document.write( "<option> " + key );
 }
 
 function convert_ucn_unit()

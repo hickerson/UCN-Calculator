@@ -2,6 +2,8 @@
 
 open F, "<$ARGV[0]" or die;
 my $protons = $ARGV[1];
+my $mass = $ARGV[2];
+my $density = $ARGV[3];
 die unless defined $protons;
 
 my $in_table = 0;
@@ -34,6 +36,8 @@ while (<F>)
 
       print "     '$isotope': {Z: $protons, ";
       if ($nucleons eq '') {
+	print "mass: $mass, ";
+	print "density: $density, " unless $density eq '';
       } else {
         $neutrons = $nucleons - $protons;
         $mass = $nucleons; 

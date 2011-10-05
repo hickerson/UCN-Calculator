@@ -5,131 +5,133 @@ G ()
   z="$1"
   elt="$2"
   eltname="$3"
+  mass="$4"
+  density="$5"
   lcelt=`echo "$2" | tr A-Z a-z`
   if test -r "isotope-$2.html" || wget -q -O nist/isotope-$2.html "http://www.ncnr.nist.gov/resources/n-lengths/elements/$lcelt.html" ; then
-    perl parse-tope-info.pl nist/isotope-$2.html $z
+    perl parse-tope-info.pl nist/isotope-$2.html $z $mass $density
   else
     echo "no isotope page for $2" 1>&2
   fi
 }
 
 echo "var isotopes = {"
-G 1	H	Hydrogen
-G 2	He	Helium
-G 3	Li	Lithium
-G 4	Be	Beryllium
-G 5	B	Boron
-G 6	C	Carbon
-G 7	N	Nitrogen
-G 8	O	Oxygen
-G 9	F	Fluorine
-G 10	Ne	Neon
-G 11	Na	Sodium
-G 12	Mg	Magnesium
-G 13	Al	Aluminium
-G 14	Si	Silicon
-G 15	P	Phosphorus
-G 16	S	Sulfur
-G 17	Cl	Chlorine
-G 18	Ar	Argon
-G 19	K	Potassium
-G 20	Ca	Calcium
-G 21	Sc	Scandium
-G 22	Ti	Titanium
-G 23	V	Vanadium
-G 24	Cr	Chromium
-G 25	Mn	Manganese
-G 26	Fe	Iron
-G 27	Co	Cobalt
-G 28	Ni	Nickel
-G 29	Cu	Copper
-G 30	Zn	Zinc
-G 31	Ga	Gallium
-G 32	Ge	Germanium
-G 33	As	Arsenic
-G 34	Se	Selenium
-G 35	Br	Bromine
-G 36	Kr	Krypton
-G 37	Rb	Rubidium
-G 38	Sr	Strontium
-G 39	Y	Yttrium
-G 40	Zr	Zirconium
-G 41	Nb	Niobium
-G 42	Mo	Molybdenum
-G 43	Tc	Technetium
-G 44	Ru	Ruthenium
-G 45	Rh	Rhodium
-G 46	Pd	Palladium
-G 47	Ag	Silver
-G 48	Cd	Cadmium
-G 49	In	Indium
-G 50	Sn	Tin
-G 51	Sb	Antimony
-G 52	Te	Tellurium
-G 53	I	Iodine
-G 54	Xe	Xenon
-G 55	Cs	Caesium
-G 56	Ba	Barium
-G 57	La	Lanthanum
-G 58	Ce	Cerium
-G 59	Pr	Praseodymium
-G 60	Nd	Neodymium
-G 61	Pm	Promethium
-G 62	Sm	Samarium
-G 63	Eu	Europium
-G 64	Gd	Gadolinium
-G 65	Tb	Terbium
-G 66	Dy	Dysprosium
-G 67	Ho	Holmium
-G 68	Er	Erbium
-G 69	Tm	Thulium
-G 70	Yb	Ytterbium
-G 71	Lu	Lutetium
-G 72	Hf	Hafnium
-G 73	Ta	Tantalum
-G 74	W	Tungsten
-G 75	Re	Rhenium
-G 76	Os	Osmium
-G 77	Ir	Iridium
-G 78	Pt	Platinum
-G 79	Au	Gold
-G 80	Hg	Mercury
-G 81	Tl	Thallium
-G 82	Pb	Lead
-G 83	Bi	Bismuth
-G 84	Po	Polonium
-G 85	At	Astatine
-G 86	Rn	Radon
-G 87	Fr	Francium
-G 88	Ra	Radium
-G 89	Ac	Actinium
-G 90	Th	Thorium
-G 91	Pa	Protactinium
-G 92	U	Uranium
-G 93	Np	Neptunium
-G 94	Pu	Plutonium
-G 95	Am	Americium
-G 96	Cm	Curium
-G 97	Bk	Berkelium
-G 98	Cf	Californium
-G 99	Es	Einsteinium
-G 100	Fm	Fermium
-G 101	Md	Mendelevium
-G 102	No	Nobelium
-G 103	Lr	Lawrencium
-G 104	Rf	Rutherfordium
-G 105	Db	Dubnium
-G 106	Sg	Seaborgium
-G 107	Bh	Bohrium
-G 108	Hs	Hassium
-G 109	Mt	Meitnerium
-G 110	Ds	Darmstadtium
-G 111	Rg	Roentgenium
-G 112	Cn	Copernicium
-G 113	Uut	Ununtrium
-G 114	Uuq	Ununquadium
-G 115	Uup	Ununpentium
-G 116	Uuh	Ununhexium
-G 117	Uus	Ununseptium
-G 118	Uuo	Ununoctium
+G 1	H	Hydrogen	1.00794	0.00008988
+G 2	He	Helium	4.002602	0.0001785
+G 3	Li	Lithium	6.941	0.534
+G 4	Be	Beryllium	9.012182	1.85
+G 5	B	Boron	10.811	2.34
+G 6	C	Carbon	12.0107	2.267
+G 7	N	Nitrogen	14.0067	0.0012506
+G 8	O	Oxygen	15.9994	0.001429
+G 9	F	Fluorine	18.9984032	0.001696
+G 10	Ne	Neon	20.1797	0.0008999
+G 11	Na	Sodium	22.98976928	0.971
+G 12	Mg	Magnesium	24.3050	1.738
+G 13	Al	Aluminium	26.9815386	2.698
+G 14	Si	Silicon	28.0855	2.3296
+G 15	P	Phosphorus	30.973762	1.82
+G 16	S	Sulfur	32.065	2.067
+G 17	Cl	Chlorine	35.453	0.003214
+G 18	Ar	Argon	39.948	0.0017837
+G 19	K	Potassium	39.0983	0.862
+G 20	Ca	Calcium	40.078	1.54
+G 21	Sc	Scandium	44.955912	2.989
+G 22	Ti	Titanium	47.867	4.54
+G 23	V	Vanadium	50.9415	6.11
+G 24	Cr	Chromium	51.9961	7.15
+G 25	Mn	Manganese	54.938045	7.44
+G 26	Fe	Iron	55.845	7.874
+G 27	Co	Cobalt	58.933195	8.86
+G 28	Ni	Nickel	58.6934	8.912
+G 29	Cu	Copper	63.546	8.96
+G 30	Zn	Zinc	65.38	7.134
+G 31	Ga	Gallium	69.723	5.907
+G 32	Ge	Germanium	72.64	5.323
+G 33	As	Arsenic	74.92160	5.776
+G 34	Se	Selenium	78.96	4.809
+G 35	Br	Bromine	79.904	3.122
+G 36	Kr	Krypton	83.798	0.003733
+G 37	Rb	Rubidium	85.4678	1.532
+G 38	Sr	Strontium	87.62	2.64
+G 39	Y	Yttrium	88.90585	4.469
+G 40	Zr	Zirconium	91.224	6.506
+G 41	Nb	Niobium	92.90638	8.57
+G 42	Mo	Molybdenum	95.96	10.22
+G 43	Tc	Technetium	98	11.5
+G 44	Ru	Ruthenium	101.07	12.37
+G 45	Rh	Rhodium	102.90550	12.41
+G 46	Pd	Palladium	106.42	12.02
+G 47	Ag	Silver	107.8682	10.501
+G 48	Cd	Cadmium	112.411	8.69
+G 49	In	Indium	114.818	7.31
+G 50	Sn	Tin	118.710	7.287
+G 51	Sb	Antimony	121.760	6.685
+G 52	Te	Tellurium	127.60	6.232
+G 53	I	Iodine	126.90447	4.93
+G 54	Xe	Xenon	131.293	0.005887
+G 55	Cs	Caesium	132.9054519	1.873
+G 56	Ba	Barium	137.327	3.594
+G 57	La	Lanthanum	138.90547	6.145
+G 58	Ce	Cerium	140.116	6.77
+G 59	Pr	Praseodymium	140.90765	6.773
+G 60	Nd	Neodymium	144.242	7.007
+G 61	Pm	Promethium	145	7.26
+G 62	Sm	Samarium	150.36	7.52
+G 63	Eu	Europium	151.964	5.243
+G 64	Gd	Gadolinium	157.25	7.895
+G 65	Tb	Terbium	158.92535	8.229
+G 66	Dy	Dysprosium	162.500	8.55
+G 67	Ho	Holmium	164.93032	8.795
+G 68	Er	Erbium	167.259	9.066
+G 69	Tm	Thulium	168.93421	9.321
+G 70	Yb	Ytterbium	173.054	6.965
+G 71	Lu	Lutetium	174.9668	9.84
+G 72	Hf	Hafnium	178.49	13.31
+G 73	Ta	Tantalum	180.94788	16.654
+G 74	W	Tungsten	183.84	19.25
+G 75	Re	Rhenium	186.207	21.02
+G 76	Os	Osmium	190.23	22.61
+G 77	Ir	Iridium	192.217	22.56
+G 78	Pt	Platinum	195.084	21.46
+G 79	Au	Gold	196.966569	19.282
+G 80	Hg	Mercury	200.59	13.5336
+G 81	Tl	Thallium	204.3833	11.85
+G 82	Pb	Lead	207.2	11.342
+G 83	Bi	Bismuth	208.98040	9.807
+G 84	Po	Polonium	210	9.32
+G 85	At	Astatine	210	7
+G 86	Rn	Radon	222	0.00973
+G 87	Fr	Francium	223	1.87
+G 88	Ra	Radium	226	5.5
+G 89	Ac	Actinium	227	10.07
+G 90	Th	Thorium	232.03806	11.72
+G 91	Pa	Protactinium	231.03588	15.37
+G 92	U	Uranium	238.02891	18.95
+G 93	Np	Neptunium	237	20.45
+G 94	Pu	Plutonium	244	19.84
+G 95	Am	Americium	243	13.69
+G 96	Cm	Curium	247	13.51
+G 97	Bk	Berkelium	247	14.79
+G 98	Cf	Californium	251	15.1
+G 99	Es	Einsteinium	252	13.5
+G 100	Fm	Fermium	257	""
+G 101	Md	Mendelevium	258	""
+G 102	No	Nobelium	259	""
+G 103	Lr	Lawrencium	262	""
+G 104	Rf	Rutherfordium	261	18.1
+G 105	Db	Dubnium	262	39
+G 106	Sg	Seaborgium	266	35
+G 107	Bh	Bohrium	264	37
+G 108	Hs	Hassium	267	41
+G 109	Mt	Meitnerium	268	35
+G 110	Ds	Darmstadtium	271	""
+G 111	Rg	Roentgenium	272	""
+G 112	Cn	Copernicium	285	""
+G 113	Uut	Ununtrium	284	""
+G 114	Uuq	Ununquadium	289	""
+G 115	Uup	Ununpentium	288	""
+G 116	Uuh	Ununhexium	292	""
+G 117	Uus	Ununseptium	295	""
+G 118	Uuo	Ununoctium	294	""
 echo "'end': 0};"

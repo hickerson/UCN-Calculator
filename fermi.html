@@ -94,6 +94,7 @@
         {
             var isotope = $("#compound-select-"+i).val();
             var element = isotope.replace(/[0-9]/g, "");
+            var molarity = $("#compound-molarity-"+i).val();
 
             var to_unit = $("#to-compound-select").val();
             $("#to-fermi-words").html(units[to_unit].words);
@@ -105,8 +106,8 @@
             else
                 var density = isotopes[element].density * mass / isotopes[element].mass;
 
-            mass_energy += 156.811 * density * cohb; // add molar
-            total_mass += mass; // add molar
+            mass_energy += 156.811 * density * cohb * molarity;
+            total_mass += molarity * mass;
         }
         
         $("#compound-density").val(density);
@@ -171,9 +172,10 @@
     <p id="advanced-fermi-potential">
         The compound 
         <select id="compound-select-0" class="isotope-select" onChange="compute_compound_fermi_potential()"> </select>
-        <input id="molar-fraction-0" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
+        <input id="compound-molarity-0" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
         <select id="compound-select-1" class="isotope-select" onChange="compute_compound_fermi_potential()"> </select>
-        <input id="molar-fraction-1" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
+        <input id="compound-molarity-1" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
+
         that has a density of 
         <input id="compound-density" type="text" value="1" size="8" maxlength="12" onChange="compound_density_change=true">
         <span id="to-compound-words">has energy</span>

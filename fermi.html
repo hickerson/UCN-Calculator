@@ -2,154 +2,160 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-<title>UCN Calculator</title>
-<link rel="icon" href="http://www.caltech.edu/favicon.ico" type="image/icon">
-<link rel="stylesheet" href="http://www.caltech.edu/aux/main.css" type="text/css">
-<meta name="keywords" content="ultra cold neutrons, ultracold neutrons, UCN research, science, engineering, technology">
+    <title>UCN Calculator</title>
+    <link rel="icon" href="http://www.caltech.edu/favicon.ico" type="image/icon">
+    <link rel="stylesheet" href="http://www.caltech.edu/aux/main.css" type="text/css">
+    <meta name="keywords" content="ultra cold neutrons, ultracold neutrons, UCN research, science, engineering, technology">
 
-<script language='JavaScript' src='http://code.jquery.com/jquery-1.6.4.min.js'></script>
-<script language='JavaScript' src='http://www.caltech.edu/aux/dynamic-images.js'></script>
-<script language='JavaScript' src='http://www.caltech.edu/aux/image-functions.js'></script>
-<script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
+    <script language='JavaScript' src='http://code.jquery.com/jquery-1.6.4.min.js'></script>
+    <script language='JavaScript' src='http://www.caltech.edu/aux/dynamic-images.js'></script>
+    <script language='JavaScript' src='http://www.caltech.edu/aux/image-functions.js'></script>
+    <script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
 
-<script language='JavaScript' src='isotopes.js'></script>
-<script language='JavaScript' src='units.js'></script>
+    <script language='JavaScript' src='isotopes.js'></script>
+    <script language='JavaScript' src='units.js'></script>
 
-<script type="text/javascript">
-/*
-var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
-                                         "Graphite", "Iron", "Copper", "Aluminum");
-var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
-*/
+    <script type="text/javascript">
+    /*
+    var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
+                                             "Graphite", "Iron", "Copper", "Aluminum");
+    var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+    */
 
-$(function() {
-        
-});
+    $(function() {
+    //    for (var key in isotopes) 
+    //        $("#from-fermi-select").append("<option> " + key + " </option>");
+    make_select("#from-fermi-select", isotopes);
+    });
 
-function make_unit_select()
-{
-	for (var key in unit)
-		document.write( "<option> " + key );
-}
-
-function make_fermi_select()
-{
-	for (var key in isotopes)
-		document.write( "<option> " + key );
-}
-
-function convert_ucn_unit()
-{
-	var from_index = $("#from-unit-select").val();
-	$("#from-unit-words").html(unit[from_index].words);
-
-	var to_index = $("#to-unit-select").val();
-    $("#to-unit-words").html(unit[to_index].words);
-
-	var from_value = $("#from-unit-value").val();
-	if(isNaN(from_value))
-		$("#to-unit-value").html("?"); // TODO make some error message
-	else
-	{
-		energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
-		to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
-	    $("#to-unit-value").html(to_value.toPrecision(6));
+    function make_select(selector, list)
+    {
+        for (var key in list)
+            $(selector).append("<option> " + key + " </option>");
     }
-}
 
-function convert_fermi_potential()
-{
-	var isotope = $("#from-fermi-select").val();
-    var element = isotope.replace(/[0-9]/g, "");
+    function make_unit_select()
+    {
+        for (var key in unit)
+            //.append("<option> " + key + " </option>");
+            document.write( "<option> " + key );
+    }
 
-	var to_key = $("#to-fermi-select").val();
-	$("#to-fermi-words").html(unit[to_key].words);
-	//energy_neV = Fermi_potentials[from_index];
-    var cohb = isotopes[isotope].cohb;
-    var mass = isotopes[isotope].mass;
-    var density = isotopes[element].density * mass / isotopes[element].mass;
-    //var energy_neV = isotopes[isotope].cohxs;
-    var energy_neV = 156.811 * density * cohb / mass;
-    
-	to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
-	$("#to-fermi-value").html(to_value.toPrecision(4));
-	//$("#to-fermi-value").html(energy_neV);
-}
-</script>
+    function make_fermi_select()
+    {
+        for (var key in isotopes)
+            document.write( "<option> " + key );
+    }
+
+    function convert_ucn_unit()
+    {
+        var from_index = $("#from-unit-select").val();
+        $("#from-unit-words").html(unit[from_index].words);
+
+        var to_index = $("#to-unit-select").val();
+        $("#to-unit-words").html(unit[to_index].words);
+
+        var from_value = $("#from-unit-value").val();
+        if(isNaN(from_value))
+            $("#to-unit-value").html("?"); // TODO make some error message
+        else
+        {
+            energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
+            to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
+            $("#to-unit-value").html(to_value.toPrecision(6));
+        }
+    }
+
+    function convert_fermi_potential()
+    {
+        var isotope = $("#from-fermi-select").val();
+        var element = isotope.replace(/[0-9]/g, "");
+
+        var to_key = $("#to-fermi-select").val();
+        $("#to-fermi-words").html(unit[to_key].words);
+        //energy_neV = Fermi_potentials[from_index];
+        var cohb = isotopes[isotope].cohb;
+        var mass = isotopes[isotope].mass;
+        var density = isotopes[element].density * mass / isotopes[element].mass;
+        //var energy_neV = isotopes[isotope].cohxs;
+        var energy_neV = 156.811 * density * cohb / mass;
+        
+        to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
+        $("#to-fermi-value").html(to_value.toPrecision(4));
+        //$("#to-fermi-value").html(energy_neV);
+    }
+    </script>
 
 </head>
 
 <body bgcolor="white" onload="resetSearch()";>
-<!-- header -->	
-<script language='JavaScript1.2' src='http://www.caltech.edu/aux/header.js'></script>
+    <!-- header -->	
+    <script language='JavaScript1.2' src='http://www.caltech.edu/aux/header.js'></script>
 
-<!-- content -->
+    <!-- content -->
 
-<h1>UCN Units Calculator</h1>
-<hr>
-<p>
-<b>Instructions</b>
-<ol>
-    <li> Enter a numeric value or simple expression.</li>
-    <li> Select UCN units from the dropdown lists. </li>
-    <li> Click the "Calculate" button. </li>
-</ol>
-<br />
+    <h1>UCN Units Calculator</h1>
+    <hr>
+    <p>
+    <b>Instructions</b>
+    <ol>
+        <li> Enter a numeric value or simple expression.</li>
+        <li> Select UCN units from the dropdown lists. </li>
+        <li> Click the "Calculate" button. </li>
+    </ol>
+    <br />
 
-<p>
-    A UCN that <span id="from-unit-words">has energy</span>
-    <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
+    <p>
+        A UCN that <span id="from-unit-words">has energy</span>
+        <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
 
-    <select id="from-unit-select" onChange="convert_ucn_unit()">
-        <script> make_unit_select(); </script>
-    </select>
+        <select id="from-unit-select" onChange="convert_ucn_unit()">
+            <script> make_unit_select(); </script>
+        </select>
 
-    <span id="to-unit-words">has energy</span>
-    <span id="to-unit-value">1</span>
+        <span id="to-unit-words">has energy</span>
+        <span id="to-unit-value">1</span>
 
-    <select id="to-unit-select" onChange="convert_ucn_unit()">
-        <script> make_unit_select(); </script>
-    </select>
+        <select id="to-unit-select" onChange="convert_ucn_unit()">
+            <script> make_unit_select(); </script>
+        </select>
 
-    <input type="button" value="Calculate" onClick="convert_ucn_unit()">
+        <input type="button" value="Calculate" onClick="convert_ucn_unit()">
 
-<br>
-<br>
-<h1>Fermi Potential Calculation</h1>
-<hr>
+    <br>
+    <br>
+    <h1>Fermi Potential Calculation</h1>
+    <hr>
 
-<p>
-    The Fermi potential of
-    <select id="from-fermi-select" onChange="convert_fermi_potential()";>
-        <script> make_fermi_select(); </script>
-    </select>
-    can trap a UCN that <span id="to-fermi-words">has energy</span>
-    <span id="to-fermi-value">...</span>
-    <select id="to-fermi-select" onChange="convert_fermi_potential()";>
-        <script> make_unit_select(); </script>
-    </select>
-    has density <span id="isotope-density">...</span>
-    <input type="button" value="Calculate" onClick="convert_fermi_potential()";>
+    <p>
+        The Fermi potential of
+        <select id="from-fermi-select" onChange="convert_fermi_potential()";>
+            <!--<script> make_fermi_select(); </script>-->
+        </select>
+        can trap a UCN that <span id="to-fermi-words">has energy</span>
+        <span id="to-fermi-value">...</span>
+        <select id="to-fermi-select" onChange="convert_fermi_potential()";>
+            <script> make_unit_select(); </script>
+        </select>
+        has density <span id="isotope-density">...</span>
+        <input type="button" value="Calculate" onClick="convert_fermi_potential()";>
 
-<!-- footer -->	
-<hr/>
-<p align="right">
-<table border=0 width=100%>
-<tr>
-<td align="left">
-Last updated June 26, 2008
-</td>
-<td align="right">
-&copy; 2008 Kevin Hickerson
-</td>
-</tr>
-</table>
-</p>
-<br/>
-<br/>
-<br/>
+    <!-- footer -->	
+    <hr/>
 
-<script language='JavaScript1.2' src='http://www.caltech.edu/aux/footer.js'></script> 
+    <p width="100%">
+        <span align="left"> Last updated Oct 6, 2011</span>
+        <span align="right"> &copy; 2011 Kevin Hickerson, Caltech </span>
+    </p>
+
+    <br/>
+    <br/>
+    <br/>
+
+    <script language='JavaScript1.2' src='http://www.caltech.edu/aux/footer.js'></script> 
+
+    <script>
+    </script>
 
 </body>
 

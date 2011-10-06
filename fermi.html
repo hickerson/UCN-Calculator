@@ -90,6 +90,7 @@
         var energy = new Array(2);
         var mass_energy = 0;
         var total_mass = 0;
+
         for (var i = 0; i < 2; i++) 
         {
             var isotope = $("#compound-select-"+i).val();
@@ -97,12 +98,12 @@
             var molarity = $("#compound-molarity-"+i).val();
 
             var to_unit = $("#to-compound-select").val();
-            $("#to-fermi-words").html(units[to_unit].words);
+            $("#to-compound-words").html(units[to_unit].words);
 
             var cohb = isotopes[isotope].cohb;
             var mass = isotopes[isotope].mass;
-            if ( isotope_density_change )
-                var density = $("#isotope-density").val();
+            if ( compound_density_change )
+                var density = $("#compound-density").val();
             else
                 var density = isotopes[element].density * mass / isotopes[element].mass;
 
@@ -110,10 +111,10 @@
             total_mass += molarity * mass;
         }
         
-        $("#compound-density").val(density);
-        isotope_density_change = false;
-
         var energy_neV = mass_energy / total_mass;
+
+        $("#compound-density").val(density);
+        compound_density_change = false;
 
         set_energy_value("#to-compound-value", energy_neV, to_unit);
     }

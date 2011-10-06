@@ -16,11 +16,15 @@
 <script language='JavaScript' src='units.js'></script>
 
 <script type="text/javascript">
-
+/*
 var Fermi_potential_elements = new Array("Beryllium", "BeO", "Nickel", "Diamond", "DLC", 
                                          "Graphite", "Iron", "Copper", "Aluminum");
 var Fermi_potentials = new Array(252, 261, 252, 304, 354, 180, 210, 168, 54);
+*/
 
+$(function() {
+        
+});
 
 function make_unit_select()
 {
@@ -55,12 +59,17 @@ function convert_ucn_unit()
 
 function convert_fermi_potential()
 {
-	var from_key = $("#from-fermi-select").val();
+	var isotope = $("#from-fermi-select").val();
+    var element = isotope.replace(/[0-9]/g, "");
 
 	var to_key = $("#to-fermi-select").val();
 	$("#to-fermi-words").html(unit[to_key].words);
 	//energy_neV = Fermi_potentials[from_index];
-    var energy_neV = isotopes[from_key].cohxs;
+    var cohb = isotopes[isotope].cohb;
+    var mass = isotopes[isotope].mass;
+    var density = isotopes[element].density * mass / isotopes[element].mass;
+    //var energy_neV = isotopes[isotope].cohxs;
+    var energy_neV = 156.811 * density * cohb / mass;
     
 	to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
 	$("#to-fermi-value").html(to_value.toPrecision(4));
@@ -86,75 +95,41 @@ function convert_fermi_potential()
     <li> Click the "Calculate" button. </li>
 </ol>
 <br />
-<p>
-<!--<form id="unit-calc">-->
-<!--<table>
-    <tr>
-        <td>-->A UCN that
-        <span id="from-unit-words">has energy</span>
-        <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
-        
-        <select id="from-unit-select" onChange="convert_ucn_unit()">
-            <script> make_unit_select(); </script>
-        </select>
-        
-        <span id="to-unit-words">has energy</span>
-        <span id="to-unit-value">1</span>
-        
-        <select id="to-unit-select" onChange="convert_ucn_unit()">
-            <script> make_unit_select(); </script>
-        </select>
-        
-        <input type="button" value="Calculate" onClick="convert_ucn_unit()">
-        <!--
-    </tr>
-</table>-->
-<!--</form>-->
 
-<script>
-    /*
-    $("select").change(function () {
-        var str = "";
-        $("select option:selected").each(function () {
-            str += $(this).text() + " ";
-        });
-        $("div").text(str);
-    })
-    .trigger('change');
-    */
-</script>
+<p>
+    A UCN that <span id="from-unit-words">has energy</span>
+    <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
+
+    <select id="from-unit-select" onChange="convert_ucn_unit()">
+        <script> make_unit_select(); </script>
+    </select>
+
+    <span id="to-unit-words">has energy</span>
+    <span id="to-unit-value">1</span>
+
+    <select id="to-unit-select" onChange="convert_ucn_unit()">
+        <script> make_unit_select(); </script>
+    </select>
+
+    <input type="button" value="Calculate" onClick="convert_ucn_unit()">
 
 <br>
 <br>
 <h1>Fermi Potential Calculation</h1>
 <hr>
 
-<p><form name="fermi-calc">
-<table>
-    <tr>
-        <td>The Fermi potential of </td>
-        <td>
-            <select id="from-fermi-select" onChange="convert_fermi_potential()";>
-                <script> make_fermi_select(); </script>
-            </select>
-        </td>
-        <td> can trap a UCN that </td>
-        <td><div id="to-fermi-words">has energy</div></td>
-        <td><div id="to-fermi-value">...</div></td>
-        <td>
-            <select id="to-fermi-select" onChange="convert_fermi_potential()";>
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>has density <span id="isotope-density">...</span></td>
-    </tr>
-    <tr>
-        <td> <input type="button" value="Calculate" onClick="convert_fermi_potential()";> </td>
-    </tr>
-</table>
-</form>
+<p>
+    The Fermi potential of
+    <select id="from-fermi-select" onChange="convert_fermi_potential()";>
+        <script> make_fermi_select(); </script>
+    </select>
+    can trap a UCN that <span id="to-fermi-words">has energy</span>
+    <span id="to-fermi-value">...</span>
+    <select id="to-fermi-select" onChange="convert_fermi_potential()";>
+        <script> make_unit_select(); </script>
+    </select>
+    has density <span id="isotope-density">...</span>
+    <input type="button" value="Calculate" onClick="convert_fermi_potential()";>
 
 <!-- footer -->	
 <hr/>

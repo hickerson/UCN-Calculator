@@ -1,6 +1,6 @@
 // unit per neV: neV, Tesla, Gauss, meters, cm, Kelvin, mK
 // unit per m/s: m/s, cm/s, seconds
-var unit = {
+var units = {
     "neV" : {
         words: "has energy", 
         exp: 1, 

@@ -27,7 +27,7 @@
 
     $(function() {
         make_select(".isotope-select", isotopes);
-        make_select(".unit-select", unit);
+        make_select(".unit-select", units);
     });
 
     function make_select(selector, list)
@@ -36,27 +36,23 @@
             $(selector).append("<option> " + key + " </option>");
     }
 
-    function set_energy_value(selector, energy, key)
+    function set_energy_value(selector, energy, unit)
     {
-        to_value = Math.pow(energy / unit[key].coef, 1/unit[key].exp);
-        $(selector).html(to_value.toPrecision(4));
-
+        var value = Math.pow(energy / units[unit].coef, 1/units[unit].exp);
+        $(selector).html(value.toPrecision(4));
     }
 
     function compute_ucn_unit()
     {
-        var from_index = $("#from-unit-select").val();
-        $("#from-unit-words").html(unit[from_index].words);
+        var from_unit = $("#from-unit-select").val();
+        $("#from-unit-words").html(units[from_unit].words);
 
-        var to_index = $("#to-unit-select").val();
-        $("#to-unit-words").html(unit[to_index].words);
+        var to_unit = $("#to-unit-select").val();
+        $("#to-unit-words").html(units[to_unit].words);
 
         var from_value = $("#from-unit-value").val();
-
-        energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
-        //to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
-        //$("#to-unit-value").html(to_value.toPrecision(4));
-        set_energy_value("#to-unit-value", energy_neV, to_index).html(to_value.toPrecision(4));
+        energy_neV = units[from_unit].coef * Math.pow(from_value, units[from_unit].exp);
+        set_energy_value("#to-unit-value", energy_neV, to_unit);
     }
 
     function compute_fermi_potential()
@@ -64,8 +60,9 @@
         var isotope = $("#isotope-select").val();
         var element = isotope.replace(/[0-9]/g, "");
 
-        var to_key = $("#to-fermi-select").val();
-        $("#to-fermi-words").html(unit[to_key].words);
+        var to_unit = $("#to-fermi-select").val();
+        $("#to-fermi-words").html(units[to_unit].words);
+
         var cohb = isotopes[isotope].cohb;
         var mass = isotopes[isotope].mass;
         if ( isotope_density_change )
@@ -84,8 +81,7 @@
         $("#isotope-density").val(density);
         isotope_density_change = false;
 
-        to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
-        $("#to-fermi-value").html(to_value.toPrecision(4));
+        set_energy_value("#to-fermi-value", energy_neV, to_unit);
     }
     </script>
 
@@ -136,7 +132,7 @@
 
     <br />
 
-    <h1>Fermi Potential of Compounds Calculator</h1>
+    <h1>Compound Fermi Potential Calculator</h1>
     <hr>
 
     <p id="advanced-fermi-potential">

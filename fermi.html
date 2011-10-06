@@ -88,26 +88,27 @@ function convert_fermi_potential()
 <br />
 <p>
 <!--<form id="unit-calc">-->
-<table>
+<!--<table>
     <tr>
-        <td>A UCN that </td>
-        <td> <div id="from-unit-words">has energy</div> </td>
-        <td> <input id="from-unit-value" type="text" value="1" size="8" maxlength="12"> </td>
-        <td>
-            <select id="from-unit-select" onChange="convert_ucn_unit()">
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-        <td> <div id="to-unit-words">has energy</div> </td>
-        <td> <div id="to-unit-value">1</div> </td>
-        <td>
-            <select id="to-unit-select" onChange="convert_ucn_unit()">
-                <script> make_unit_select(); </script>
-            </select>
-        </td>
-        <td> <input type="button" value="Calculate" onClick="convert_ucn_unit()"> </td>
+        <td>-->A UCN that
+        <span id="from-unit-words">has energy</span>
+        <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
+        
+        <select id="from-unit-select" onChange="convert_ucn_unit()">
+            <script> make_unit_select(); </script>
+        </select>
+        
+        <span id="to-unit-words">has energy</span>
+        <span id="to-unit-value">1</span>
+        
+        <select id="to-unit-select" onChange="convert_ucn_unit()">
+            <script> make_unit_select(); </script>
+        </select>
+        
+        <input type="button" value="Calculate" onClick="convert_ucn_unit()">
+        <!--
     </tr>
-</table>
+</table>-->
 <!--</form>-->
 
 <script>

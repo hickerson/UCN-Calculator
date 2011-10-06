@@ -23,9 +23,7 @@
     */
 
     $(function() {
-    //    for (var key in isotopes) 
-    //        $("#from-fermi-select").append("<option> " + key + " </option>");
-        make_select("#from-fermi-select", isotopes);
+        make_select("#isotope-select", isotopes);
         make_select("#to-fermi-select", unit);
         make_select("#from-unit-select", unit);
         make_select("#to-unit-select", unit);
@@ -71,21 +69,18 @@
 
     function convert_fermi_potential()
     {
-        var isotope = $("#from-fermi-select").val();
+        var isotope = $("#isotope-select").val();
         var element = isotope.replace(/[0-9]/g, "");
 
         var to_key = $("#to-fermi-select").val();
         $("#to-fermi-words").html(unit[to_key].words);
-        //energy_neV = Fermi_potentials[from_index];
         var cohb = isotopes[isotope].cohb;
         var mass = isotopes[isotope].mass;
         var density = isotopes[element].density * mass / isotopes[element].mass;
-        //var energy_neV = isotopes[isotope].cohxs;
         var energy_neV = 156.811 * density * cohb / mass;
         
         to_value = Math.pow(energy_neV / unit[to_key].coef, 1/unit[to_key].exp);
         $("#to-fermi-value").html(to_value.toPrecision(4));
-        //$("#to-fermi-value").html(energy_neV);
     }
     </script>
 
@@ -112,16 +107,12 @@
         A UCN that <span id="from-unit-words">has energy</span>
         <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
 
-        <select id="from-unit-select" onChange="convert_ucn_unit()">
-            <!--<script> make_unit_select(); </script>-->
-        </select>
+        <select id="from-unit-select" onChange="convert_ucn_unit()"> </select>
 
         <span id="to-unit-words">has energy</span>
         <span id="to-unit-value">1</span>
 
-        <select id="to-unit-select" onChange="convert_ucn_unit()">
-            <!--<script> make_unit_select(); </script>-->
-        </select>
+        <select id="to-unit-select" onChange="convert_ucn_unit()"> </select>
 
         <input type="button" value="Calculate" onClick="convert_ucn_unit()">
 
@@ -130,16 +121,12 @@
     <h1>Fermi Potential Calculation</h1>
     <hr>
 
-    <p>
+    <p >
         The Fermi potential of
-        <select id="from-fermi-select" onChange="convert_fermi_potential()";>
-            <!--<script> make_fermi_select(); </script>-->
-        </select>
+        <select id="from-fermi-select" onChange="convert_fermi_potential()";> </select>
         can trap a UCN that <span id="to-fermi-words">has energy</span>
         <span id="to-fermi-value">...</span>
-        <select id="to-fermi-select" onChange="convert_fermi_potential()";>
-            <!--<script> make_unit_select(); </script>-->
-        </select>
+        <select id="to-fermi-select" onChange="convert_fermi_potential()";> </select>
         has density <span id="isotope-density">...</span>
         <input type="button" value="Calculate" onClick="convert_fermi_potential()";>
 

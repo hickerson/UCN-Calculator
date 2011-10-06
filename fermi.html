@@ -24,9 +24,12 @@
 
     $(function() {
         make_select("#isotope-select", isotopes);
+        /*
         make_select("#to-fermi-select", unit);
         make_select("#from-unit-select", unit);
         make_select("#to-unit-select", unit);
+        */
+        make_select(".unit-select", unit);
     });
 
     function make_select(selector, list)
@@ -106,14 +109,10 @@
     <p>
         A UCN that <span id="from-unit-words">has energy</span>
         <input id="from-unit-value" type="text" value="1" size="8" maxlength="12">
-
-        <select id="from-unit-select" onChange="convert_ucn_unit()"> </select>
-
+        <select id="from-unit-select" class="unit-select" onChange="convert_ucn_unit()"> </select>
         <span id="to-unit-words">has energy</span>
         <span id="to-unit-value">1</span>
-
-        <select id="to-unit-select" onChange="convert_ucn_unit()"> </select>
-
+        <select id="to-unit-select" class="unit-select" onChange="convert_ucn_unit()"> </select>
         <input type="button" value="Calculate" onClick="convert_ucn_unit()">
 
     <br>
@@ -126,7 +125,7 @@
         <select id="from-fermi-select" onChange="convert_fermi_potential()";> </select>
         can trap a UCN that <span id="to-fermi-words">has energy</span>
         <span id="to-fermi-value">...</span>
-        <select id="to-fermi-select" onChange="convert_fermi_potential()";> </select>
+        <select id="to-fermi-select" class="unit-select" onChange="convert_fermi_potential()";> </select>
         has density <span id="isotope-density">...</span>
         <input type="button" value="Calculate" onClick="convert_fermi_potential()";>
 

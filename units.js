@@ -50,5 +50,10 @@ var units = {
         words: "reaches apogee in",
         exp: 2, 
         coef: 502.686
+    },
+    "nm": {
+        words: "hasa wavelength of",
+        exp: -2, 
+        coef: 818042
     }
 };

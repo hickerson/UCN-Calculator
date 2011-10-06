@@ -251,7 +251,7 @@ var isotopes = {
      'Sm150': {Z: 62, A: 150, N: 88, conc: '7.4', mass: 149.9172755, 'cohb': '14.(3.)', incb: '0', cohxs: '25.(11.)', incxs: '0', scaxs: '25.(11.)', abs: '104.(4.)' },
      'Sm152': {Z: 62, A: 152, N: 90, conc: '26.6', mass: 151.9197324, 'cohb': '-5.0', incb: '0', cohxs: '3.1', incxs: '0', scaxs: '3.1', abs: '206.(6.)' },
      'Sm154': {Z: 62, A: 154, N: 92, conc: '22.6', mass: 153.9222093, 'cohb': '9.3', incb: '0', cohxs: '11.(2.)', incxs: '0', scaxs: '11.(2.)', abs: '8.4' },
-     'Eu': {Z: 63, mass: 151.964, density: 5.243, 'cohb': '7.22-1.26', incb: 'null', cohxs: '6.57', incxs: '2.5', scaxs: '9.2', abs: '4530.(40.)' },
+     'Eu': {Z: 63, mass: 151.964, density: 5.243, 'cohb': '7.22', incb: 'null', cohxs: '6.57', incxs: '2.5', scaxs: '9.2', abs: '4530.(40.)' },
      'Eu151': {Z: 63, A: 151, N: 88, conc: '47.8', mass: 150.9198502, 'cohb': '6.13-2.53', incb: '(+/-)4.5-2.14', cohxs: '5.5', incxs: '3.1', scaxs: '8.6', abs: '9100.(100.)' },
      'Eu153': {Z: 63, A: 153, N: 90, conc: '52.2', mass: 152.9212303, 'cohb': '8.22', incb: '(+/-)3.2', cohxs: '8.5', incxs: '1.3', scaxs: '9.8', abs: '312.(7.)' },
      'Gd': {Z: 64, mass: 157.25, density: 7.895, 'cohb': '6.5-13.82', incb: 'null', cohxs: '29.3', incxs: '151.(2.)', scaxs: '180.(2.)', abs: '49700.(125.)' },

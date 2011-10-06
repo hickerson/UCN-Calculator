@@ -36,20 +36,12 @@
             $(selector).append("<option> " + key + " </option>");
     }
 
-/*
-    function make_unit_select()
+    function set_energy_value(selector, energy, key)
     {
-        for (var key in unit)
-            //.append("<option> " + key + " </option>");
-            document.write( "<option> " + key );
-    }
+        to_value = Math.pow(energy / unit[key].coef, 1/unit[key].exp);
+        $(selector).html(to_value.toPrecision(4));
 
-    function make_fermi_select()
-    {
-        for (var key in isotopes)
-            document.write( "<option> " + key );
     }
-*/
 
     function compute_ucn_unit()
     {
@@ -60,14 +52,11 @@
         $("#to-unit-words").html(unit[to_index].words);
 
         var from_value = $("#from-unit-value").val();
-        if(isNaN(from_value))
-            $("#to-unit-value").html("?"); // TODO make some error message
-        else
-        {
-            energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
-            to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
-            $("#to-unit-value").html(to_value.toPrecision(6));
-        }
+
+        energy_neV = unit[from_index].coef * Math.pow(from_value, unit[from_index].exp);
+        //to_value = Math.pow(energy_neV / unit[to_index].coef, 1/unit[to_index].exp);
+        //$("#to-unit-value").html(to_value.toPrecision(4));
+        set_energy_value("#to-unit-value", energy_neV, to_index).html(to_value.toPrecision(4));
     }
 
     function compute_fermi_potential()

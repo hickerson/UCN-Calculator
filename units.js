@@ -52,8 +52,13 @@ var units = {
         coef: 502.686
     },
     "nm": {
-        words: "hasa wavelength of",
+        words: "has a wavelength of",
         exp: -2, 
         coef: 818042
+    },
+    "Angstroms": {
+        words: "has a wavelength of",
+        exp: -2, 
+        coef: 81804200
     }
 };

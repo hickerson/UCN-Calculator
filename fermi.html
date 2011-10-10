@@ -55,7 +55,7 @@
         set_energy_value("#to-unit-value", energy_neV, to_unit);
     }
 
-    function compute_fermi_potential()
+    function computeIsotope(save)
     {
         var isotope = $("#isotope-select").val();
         var element = isotope.replace(/[0-9]/g, "");
@@ -65,10 +65,13 @@
 
         var cohb = isotopes[isotope].cohb;
         var mass = isotopes[isotope].mass;
-        if ( isotope_density_change )
-            var density = $("#isotope-density").val();
-        else
-            var density = isotopes[element].density * mass / isotopes[element].mass;
+
+        if ( save )
+            density = eval($("#isotope-density").val());
+        else {
+            density = isotopes[element].density * mass / isotopes[element].mass;
+            $("#isotope-density").val(density);
+        } 
 
         var energy_neV = 156.811 * density * cohb / mass;
         
@@ -78,13 +81,15 @@
         else
             $("#isotope-label").html("pure isotope");
 
-        $("#isotope-density").val(density);
-        isotope_density_change = false;
 
         set_energy_value("#to-fermi-value", energy_neV, to_unit);
     }
 
-    function compute_compound_fermi_potential()
+    /**
+     * Comupte the Fermi potential of a user defined compound
+     * save - save the current user inputs. If false allow to write over user input.
+     */
+    function computeCompound(save)
     {
         var mass = new Array(2);
         var energy = new Array(2);
@@ -102,10 +107,13 @@
 
             var cohb = isotopes[isotope].cohb;
             var mass = isotopes[isotope].mass;
-            if ( compound_density_change )
-                var density = $("#compound-density").val();
-            else
+
+            if ( save )
+                var density = eval($("#compound-density").val());
+            else {
                 var density = isotopes[element].density * mass / isotopes[element].mass;
+                $("#compound-density").val(density);
+            }
 
             mass_energy += 156.811 * density * cohb * molarity;
             total_mass += molarity * mass;
@@ -113,7 +121,6 @@
         
         var energy_neV = mass_energy / total_mass;
 
-        $("#compound-density").val(density);
         compound_density_change = false;
 
         set_energy_value("#to-compound-value", energy_neV, to_unit);
@@ -156,13 +163,13 @@
 
     <p id="fermi-potential">
         The <span id="isotope-label">element</span> 
-        <select id="isotope-select" class="isotope-select" onChange="compute_fermi_potential()"> </select>
+        <select id="isotope-select" class="isotope-select" onChange="computeIsotope(false)"> </select>
         that has a density of 
-        <input id="isotope-density" type="text" value="1" size="8" maxlength="12" onChange="isotope_density_change=true">
+        <input id="isotope-density" type="text" value="1" size="8" maxlength="12" onChange="computeIsotope(true)">
         <span id="to-fermi-words">has energy</span>
         <span id="to-fermi-value">...</span>
-        <select id="to-fermi-select" class="unit-select" onChange="compute_fermi_potential()"> </select>
-        <input type="button" value="Calculate" onClick="compute_fermi_potential()">
+        <select id="to-fermi-select" class="unit-select" onChange="computeIsotope(true)"> </select>
+        <input type="button" value="Calculate" onClick="computeIsotope(true)">
     </p>
 
     <br />
@@ -172,17 +179,17 @@
 
     <p id="advanced-fermi-potential">
         The compound 
-        <select id="compound-select-0" class="isotope-select" onChange="compute_compound_fermi_potential()"> </select>
-        <input id="compound-molarity-0" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
-        <select id="compound-select-1" class="isotope-select" onChange="compute_compound_fermi_potential()"> </select>
-        <input id="compound-molarity-1" type="text" value="1" size="2" maxlength="2" onChange="compute_compound_fermi_potential()">
+        <select id="compound-select-0" class="isotope-select" onChange="computeCompound(false)"> </select>
+        <input id="compound-molarity-0" type="text" value="1" size="2" maxlength="2" onChange="computeCompound(true)">
+        <select id="compound-select-1" class="isotope-select" onChange="computeCompound(true)"> </select>
+        <input id="compound-molarity-1" type="text" value="1" size="2" maxlength="2" onChange="computeCompound(true)">
 
         that has a density of 
-        <input id="compound-density" type="text" value="1" size="8" maxlength="12" onChange="compound_density_change=true">
+        <input id="compound-density" type="text" value="1" size="8" maxlength="12" onChange="computeCompound(true)">
         <span id="to-compound-words">has energy</span>
         <span id="to-compound-value">...</span>
-        <select id="to-compound-select" class="unit-select" onChange="compute_compound_fermi_potential()"> </select>
-        <input type="button" value="Calculate" onClick="compute_compound_fermi_potential()">
+        <select id="to-compound-select" class="unit-select" onChange="computeCompound(true)"> </select>
+        <input type="button" value="Calculate" onClick="computeCompound(true)">
     </p>
     <!-- footer -->	
     <hr/>

@@ -1,0 +1,77 @@
+<html>
+<head>
+    <!--[if lte IE 8]>
+    <script src="excanvas.compiled.js"></script>
+    <![endif-->
+</head>
+<body>
+    <canvas id="canvas" height="1000px" width="1000px"></canvas>
+    <button id="redraw" onclick="redraw();">redraw</button>
+    <script>
+        function roundRect(c, x, y, width, height, radius, fill, stroke) {
+            if (typeof stroke == "undefined" ) {
+                stroke = true;
+            }
+            if (typeof radius === "undefined") {
+                radius = 5;
+            }
+            c.beginPath();
+            c.moveTo(x + radius, y);
+            c.lineTo(x + width - radius, y);
+            c.quadraticCurveTo(x + width, y, x + width, y + radius);
+            c.lineTo(x + width, y + height - radius);
+            c.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            c.lineTo(x + radius, y + height);
+            c.quadraticCurveTo(x, y + height, x, y + height - radius);
+            c.lineTo(x, y + radius);
+            c.quadraticCurveTo(x, y, x + radius, y);
+            c.closePath();
+            if (stroke) {
+                c.stroke();
+            }
+            if (fill) {
+                c.fill();
+            }        
+        }
+
+
+        var canvas = document.getElementById("canvas");
+        var cxt = canvas.getContext("2d");
+
+
+        function elementRect(cxt, x, y, width, height, radius, color, fill, stroke) 
+        {
+            var sup = 0.11 * width;
+            var sub = 0.16 * width;
+
+            cxt.shadowColor = "rgba(80,80,80,0.33)";
+            cxt.shadowOffsetX = cxt.shadowOffsetY = 4;
+            cxt.shadowBlur = 9;
+            cxt.fillStyle = color;
+            roundRect(cxt,x,y,width,height,radius,fill,stroke);
+
+            cxt.fillStyle = "rgba(255,255,255,0.7)";
+            cxt.fillStyle = "rgba(0,0,0,0.87)";
+            cxt.shadowOffsetX = cxt.shadowOffsetY = 0;
+            cxt.shadowBlur = 8;
+            cxt.shadowColor = "white";
+            cxt.textAlign = "center";
+            cxt.font = "Normal 16pt Helvetica";
+            cxt.fillText("uranium", x + width/2, y + 0.18 * width);
+
+            cxt.font = "Bold 64pt Helvetica";
+            cxt.fillText("U", x + width/2, y + 0.667 * width);
+
+            cxt.textAlign = "right";
+            cxt.font = "Bold 18pt Helvetica";
+            cxt.fillText("239", x + 0.3*width, y + width/2 - sup);
+            cxt.fillText("92", x + 0.3*width, y + width/2 + sub);
+            cxt.textAlign = "left";
+            cxt.fillText("147", x + 0.7*width, y + width/2 - sup);
+        }
+        elementRect(cxt,10.2,10.2,160,200,11.5,"#397",true,false);
+        elementRect(cxt,190.2,10.2,160,200,11.5,"#388",true,false);
+        elementRect(cxt,370.2,10.2,160,200,11.5,"#379",true,false);
+    </script>
+</body>
+</html>

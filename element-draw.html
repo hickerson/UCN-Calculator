@@ -3,6 +3,12 @@
     <!--[if lte IE 8]>
     <script src="excanvas.compiled.js"></script>
     <![endif-->
+    <script language='JavaScript' src='http://code.jquery.com/jquery-1.6.4.min.js'></script>
+    <script language='JavaScript' src='http://www.caltech.edu/aux/dynamic-images.js'></script>
+    <script language='JavaScript' src='http://www.caltech.edu/aux/image-functions.js'></script>
+    <script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
+
+    <script language='JavaScript' src='isotopes.js'></script>
 </head>
 <body>
     <canvas id="canvas" height="1000px" width="1000px"></canvas>
@@ -36,42 +42,55 @@
 
 
         var canvas = document.getElementById("canvas");
-        var cxt = canvas.getContext("2d");
+        var ctx = canvas.getContext("2d");
 
 
-        function elementRect(cxt, x, y, width, height, radius, color, fill, stroke) 
+        function elementRect(ctx, key, x, y, width, height, color) 
         {
+            //var isotope = key;
+            var isotope = isotopes[key];
+            var element = key.replace(/[0-9]/g, "");
+            var fontSize = 0.4 * width;
+            var fonts = {
+                "element" : "Bold " + fontSize + " Helvetica",
+                "exponent" : "Bold " + fontSize/2 + " Helvetica",
+                "words" : "Normal " + fontSize/3 + " Helvetica"
+            };
+
+            ctx.shadowColor = "rgba(80,80,80,0.33)";
+            ctx.shadowOffsetX = ctx.shadowOffsetY = 4;
+            ctx.shadowBlur = 9;
+            ctx.fillStyle = color;
+            roundRect(ctx,x,y,width,height,width/10,true,false);
+
+            ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.fillStyle = "rgba(0,0,0,0.87)";
+            ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "white";
+            ctx.textAlign = "center";
+            ctx.textBaseline  = "top";
+            ctx.font = fonts["words"];
+            ctx.fillText(element.name, x + width/2, y + 0.1*width);
+            ctx.fillText(isotope.mass, x + width/2, y + 0.8*width);
+
+            ctx.font = fonts["element"]
+            ctx.fillText(element, x + width/2, y + width/4);
+
             var sup = 0.11 * width;
             var sub = 0.16 * width;
-
-            cxt.shadowColor = "rgba(80,80,80,0.33)";
-            cxt.shadowOffsetX = cxt.shadowOffsetY = 4;
-            cxt.shadowBlur = 9;
-            cxt.fillStyle = color;
-            roundRect(cxt,x,y,width,height,radius,fill,stroke);
-
-            cxt.fillStyle = "rgba(255,255,255,0.7)";
-            cxt.fillStyle = "rgba(0,0,0,0.87)";
-            cxt.shadowOffsetX = cxt.shadowOffsetY = 0;
-            cxt.shadowBlur = 8;
-            cxt.shadowColor = "white";
-            cxt.textAlign = "center";
-            cxt.font = "Normal 16pt Helvetica";
-            cxt.fillText("uranium", x + width/2, y + 0.18 * width);
-
-            cxt.font = "Bold 64pt Helvetica";
-            cxt.fillText("U", x + width/2, y + 0.667 * width);
-
-            cxt.textAlign = "right";
-            cxt.font = "Bold 18pt Helvetica";
-            cxt.fillText("239", x + 0.3*width, y + width/2 - sup);
-            cxt.fillText("92", x + 0.3*width, y + width/2 + sub);
-            cxt.textAlign = "left";
-            cxt.fillText("147", x + 0.7*width, y + width/2 - sup);
+            ctx.textAlign = "right";
+            ctx.font = fonts["exponent"];
+            ctx.fillText(isotope.A, x + width/3, y + width/2 - sup);
+            ctx.fillText(isotope.Z, x + width/3, y + width/2 + sub);
+            ctx.textAlign = "left";
+            ctx.fillText(isotope.N, x + 0.7*width, y + width/2 + sub);
         }
-        elementRect(cxt,10.2,10.2,160,200,11.5,"#397",true,false);
-        elementRect(cxt,190.2,10.2,160,200,11.5,"#388",true,false);
-        elementRect(cxt,370.2,10.2,160,200,11.5,"#379",true,false);
+        elementRect(ctx,"C12",10.2,10.2,160,200,"#397");
+        elementRect(ctx,"C13",190.2,10.2,160,200,"#388");
+        elementRect(ctx,"Pu238",370.2,10.2,160,200,"#379");
+        elementRect(ctx,"Ni58",550.2,10.2,160,200,"#36a");
+        elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
     </script>
 </body>
 </html>

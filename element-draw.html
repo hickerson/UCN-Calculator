@@ -53,7 +53,7 @@
             var fontSize = 0.4 * width;
             var fonts = {
                 "element" : "Bold " + fontSize + " Helvetica",
-                "exponent" : "Bold " + fontSize/2 + " Helvetica",
+                "exponent" : "Bold " + 0.4 * fontSize + " Helvetica",
                 "words" : "Normal " + fontSize/3 + " Helvetica"
             };
 
@@ -63,8 +63,8 @@
             ctx.fillStyle = color;
             roundRect(ctx,x,y,width,height,width/10,true,false);
 
-            ctx.fillStyle = "rgba(255,255,255,0.7)";
-            ctx.fillStyle = "rgba(0,0,0,0.87)";
+            //ctx.fillStyle = "rgba(255,255,255,0.7)";
+            ctx.fillStyle = "rgba(0,0,0,0.8)";
             ctx.shadowOffsetX = ctx.shadowOffsetY = 0;
             ctx.shadowBlur = 8;
             ctx.shadowColor = "white";
@@ -72,19 +72,25 @@
             ctx.textBaseline  = "top";
             ctx.font = fonts["words"];
             ctx.fillText(element.name, x + width/2, y + 0.1*width);
-            ctx.fillText(isotope.mass, x + width/2, y + 0.8*width);
+            ctx.fillText(isotope.mass, x + width/2, y + 0.75*width);
+            ctx.fillText(isotope.conc + "%", x + width/2, y + 0.875*width);
 
+            var elementX = x + width/2;
+            var elementY = y + width/4;
+            var elementWidth = element.clientWidth;
+            var leftAlign = elementX - elementWidth/2;
+            var rightAlign = elementX - elementWidth/2;
             ctx.font = fonts["element"]
-            ctx.fillText(element, x + width/2, y + width/4);
+            ctx.fillText(element, elementX, elementY);
 
             var sup = 0.11 * width;
             var sub = 0.16 * width;
-            ctx.textAlign = "right";
             ctx.font = fonts["exponent"];
-            ctx.fillText(isotope.A, x + width/3, y + width/2 - sup);
-            ctx.fillText(isotope.Z, x + width/3, y + width/2 + sub);
+            ctx.textAlign = "right";
+            ctx.fillText(isotope.A, elementWidth/2, elementWidth/2 - sup);
+            ctx.fillText(isotope.Z, elementY - elementWidth/2, elementWidth/2 + sub);
             ctx.textAlign = "left";
-            ctx.fillText(isotope.N, x + 0.7*width, y + width/2 + sub);
+            ctx.fillText(isotope.N, elementX + elementWidth/2, elementWidth/2 + sub);
         }
         elementRect(ctx,"C12",10.2,10.2,160,200,"#397");
         elementRect(ctx,"C13",190.2,10.2,160,200,"#388");

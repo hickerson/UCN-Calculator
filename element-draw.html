@@ -11,7 +11,7 @@
     <script language='JavaScript' src='isotopes.js'></script>
 </head>
 <body>
-    <canvas id="canvas" height="1000px" width="1000px"></canvas>
+    <canvas id="canvas" height="10000px" width="10000px"></canvas>
     <button id="redraw" onclick="redraw();">redraw</button>
     <script>
         function roundRect(c, x, y, width, height, radius, fill, stroke) {
@@ -57,8 +57,8 @@
                 "words" : "Normal " + fontSize/3 + " Helvetica"
             };
 
-            ctx.shadowColor = "rgba(80,80,80,0.33)";
-            ctx.shadowOffsetX = ctx.shadowOffsetY = 4;
+            ctx.shadowColor = "rgba(80,80,80,0.5)";
+            ctx.shadowOffsetX = ctx.shadowOffsetY = 3;
             ctx.shadowBlur = 9;
             ctx.fillStyle = color;
             roundRect(ctx,x,y,width,height,width/10,true,false);
@@ -91,11 +91,24 @@
             ctx.textAlign = "left";
             ctx.fillText(isotope.N, rightAlign, sub);
         }
+        /*
         elementRect(ctx,"C12",10.2,10.2,160,200,"#397");
         elementRect(ctx,"C13",190.2,10.2,160,200,"#388");
         elementRect(ctx,"Pu238",370.2,10.2,160,200,"#379");
         elementRect(ctx,"Ni58",550.2,10.2,160,200,"#36a");
-        elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
+        */
+        //elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
+
+        for (var key in isotopes)
+        {
+            var symbol = key.replace(/[0-9]/g, "");
+            var isotope = isotopes[key];
+            if (symbol != key)
+            {
+                //alert(key);
+                elementRect(ctx, key, isotope.N*180, isotope.Z*110, 80, 100, "#397");
+            }
+        }
     </script>
 </body>
 </html>

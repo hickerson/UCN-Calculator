@@ -49,10 +49,10 @@
         {
             //var isotope = key;
             var isotope = isotopes[key];
-            var element = key.replace(/[0-9]/g, "");
-            var fontSize = 0.4 * width;
+            var symbol = key.replace(/[0-9]/g, "");
+            var fontSize = width/3;
             var fonts = {
-                "element" : "Bold " + fontSize + " Helvetica",
+                "symbol" : "Bold " + fontSize + " Helvetica",
                 "exponent" : "Bold " + 0.4 * fontSize + " Helvetica",
                 "words" : "Normal " + fontSize/3 + " Helvetica"
             };
@@ -69,28 +69,27 @@
             ctx.shadowBlur = 8;
             ctx.shadowColor = "white";
             ctx.textAlign = "center";
-            ctx.textBaseline  = "top";
+            ctx.textBaseline  = "center";
             ctx.font = fonts["words"];
-            ctx.fillText(element.name, x + width/2, y + 0.1*width);
-            ctx.fillText(isotope.mass, x + width/2, y + 0.75*width);
-            ctx.fillText(isotope.conc + "%", x + width/2, y + 0.875*width);
+            ctx.fillText("element", x + width/2, y + width/6);
+            ctx.fillText(isotope.mass, x + width/2, y + width );
+            ctx.fillText(isotope.conc + "%", x + width/2, y + (7/6)*width);
 
             var elementX = x + width/2;
-            var elementY = y + width/4;
-            var elementWidth = element.clientWidth;
-            var leftAlign = elementX - elementWidth/2;
-            var rightAlign = elementX - elementWidth/2;
-            ctx.font = fonts["element"]
-            ctx.fillText(element, elementX, elementY);
+            var elementY = y + width/2 + fontSize/4;
+            ctx.font = fonts["symbol"]
+            ctx.fillText(symbol, elementX, elementY);
 
-            var sup = 0.11 * width;
-            var sub = 0.16 * width;
+            var leftAlign = elementX - (1+symbol.length)*fontSize/4;
+            var rightAlign = elementX + (1+symbol.length)*fontSize/4;
+            var sup = elementY - fontSize/2;
+            var sub = elementY + fontSize/6;
             ctx.font = fonts["exponent"];
             ctx.textAlign = "right";
-            ctx.fillText(isotope.A, elementWidth/2, elementWidth/2 - sup);
-            ctx.fillText(isotope.Z, elementY - elementWidth/2, elementWidth/2 + sub);
+            ctx.fillText(isotope.A, leftAlign, sup);
+            ctx.fillText(isotope.Z, leftAlign, sub);
             ctx.textAlign = "left";
-            ctx.fillText(isotope.N, elementX + elementWidth/2, elementWidth/2 + sub);
+            ctx.fillText(isotope.N, rightAlign, sub);
         }
         elementRect(ctx,"C12",10.2,10.2,160,200,"#397");
         elementRect(ctx,"C13",190.2,10.2,160,200,"#388");

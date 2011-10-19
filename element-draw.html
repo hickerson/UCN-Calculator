@@ -15,7 +15,8 @@
 </head>
 <body>
     <input type="range" min="1" max="20" onchange="draw(this.value)"/>
-    <canvas id="canvas" height="800px" width="800px"></canvas>
+    <br />
+    <canvas id="canvas" height="600px" width="800px"></canvas>
     <script>
         function roundRect(c, x, y, width, height, radius, fill, stroke) {
             if (typeof stroke == "undefined" ) {
@@ -97,19 +98,24 @@
         */
         //elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
 
+        selectedIsotope = isotopes["Cd109"];
         function draw(zoom) {
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");
-            ctx.clearRect(0,0,800,800);
-            for (var key in isotopes)
-            {
+            var x = 0; var y = 0;
+            var w = 800; var h = 600;
+            ctx.clearRect(x,y,w,h);
+
+            for (var key in isotopes) {
                 var symbol = key.replace(/[0-9]/g, "");
                 var isotope = isotopes[key];
-                if (symbol != key)
-                {
-                    var N = isotope.N;
-                    var Z = isotope.Z;
-                    elementRect(ctx, key, N*9*zoom, Z*11*zoom, 8*zoom, 10*zoom, "rgb("+(5*N+100)+","+(255 - 5*Z)+","+"200)");
+
+                if (symbol != key) {
+                    //var N = isotope.N - selectedIsotope.N;
+                    //var Z = isotope.Z - selectedIsotope.Z;
+                    var N = isotope.N - 30;
+                    var Z = isotope.Z - 20;
+                    elementRect(ctx, key, N*9*zoom, h - Z*11*zoom, 8*zoom, 10*zoom, "rgb("+(5*N+100)+","+(255 - 5*Z)+","+"200)");
                 }
             }
         }
@@ -117,6 +123,8 @@
         document.body.addEventListener('touchmove', function(event) {
               event.preventDefault();
         }, false); 
+
+
         draw(10);
     </script>
 </body>

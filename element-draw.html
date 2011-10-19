@@ -11,7 +11,7 @@
     <script language='JavaScript' src='isotopes.js'></script>
 </head>
 <body>
-    <input type="range" min="1" max="20"/>
+    <input type="range" min="1" max="20" onchange="draw(this.value)"/>
     <canvas id="canvas" height="800px" width="800px"></canvas>
     <script>
         function roundRect(c, x, y, width, height, radius, fill, stroke) {
@@ -41,8 +41,6 @@
         }
 
 
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
 
 
         function elementRect(ctx, key, x, y, width, height, color) 
@@ -101,18 +99,24 @@
         */
         //elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
 
-        for (var key in isotopes)
-        {
-            var symbol = key.replace(/[0-9]/g, "");
-            var isotope = isotopes[key];
-            var zoom = 8.5;
-            if (symbol != key)
+        function draw(zoom) {
+            vsar canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0,0,800,800);
+            for (var key in isotopes)
             {
-                var N = isotope.N;
-                var Z = isotope.Z;
-                elementRect(ctx, key, N*9*zoom, Z*11*zoom, 8*zoom, 10*zoom, "rgb("+(5*N+100)+","+(255 - 5*Z)+","+"200)");
+                var symbol = key.replace(/[0-9]/g, "");
+                var isotope = isotopes[key];
+                if (symbol != key)
+                {
+                    var N = isotope.N;
+                    var Z = isotope.Z;
+                    elementRect(ctx, key, N*9*zoom, Z*11*zoom, 8*zoom, 10*zoom, "rgb("+(5*N+100)+","+(255 - 5*Z)+","+"200)");
+                }
             }
         }
+
+        draw(8.5);
     </script>
 </body>
 </html>

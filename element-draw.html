@@ -9,6 +9,9 @@
     <script language='JavaScript' src='http://www.its.caltech.edu/~kevinh/navbar.js'></script>
 
     <script language='JavaScript' src='isotopes.js'></script>
+
+    <meta name="viewport" 
+      content="width=device-width, initial-scale=1.0, user-scalable=no"> 
 </head>
 <body>
     <input type="range" min="1" max="20" onchange="draw(this.value)"/>
@@ -41,11 +44,8 @@
         }
 
 
-
-
         function elementRect(ctx, key, x, y, width, height, color) 
         {
-            //var isotope = key;
             var isotope = isotopes[key];
             var symbol = key.replace(/[0-9]/g, "");
             var fontSize = width/3;
@@ -56,12 +56,10 @@
             };
 
             ctx.shadowColor = "rgba(80,80,80,0.5)";
-            //ctx.shadowOffsetX = ctx.shadowOffsetY = width/40;
             ctx.shadowOffsetX = ctx.shadowOffsetY = 3;
-            //ctx.shadowBlur = width/20;
             ctx.shadowBlur = 9;
             ctx.fillStyle = color;
-            roundRect(ctx,x,y,width,height,width/10,true,false);
+            roundRect(ctx, x, y, width, height, width/10, true, false);
 
             //ctx.fillStyle = "rgba(255,255,255,0.7)";
             ctx.fillStyle = "rgba(0,0,0,0.8)";
@@ -100,7 +98,7 @@
         //elementRect(ctx,"Bi207",730.2,10.2,160,200,"#999");
 
         function draw(zoom) {
-            vsar canvas = document.getElementById("canvas");
+            var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");
             ctx.clearRect(0,0,800,800);
             for (var key in isotopes)
@@ -116,7 +114,10 @@
             }
         }
 
-        draw(8.5);
+        document.body.addEventListener('touchmove', function(event) {
+              event.preventDefault();
+        }, false); 
+        draw(10);
     </script>
 </body>
 </html>

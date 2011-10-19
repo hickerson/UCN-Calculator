@@ -11,8 +11,8 @@
     <script language='JavaScript' src='isotopes.js'></script>
 </head>
 <body>
-    <canvas id="canvas" height="1000px" width="1000px"></canvas>
-    <button id="redraw" onclick="redraw();">redraw</button>
+    <input type="range" min="1" max="20"/>
+    <canvas id="canvas" height="800px" width="800px"></canvas>
     <script>
         function roundRect(c, x, y, width, height, radius, fill, stroke) {
             if (typeof stroke == "undefined" ) {
@@ -105,7 +105,7 @@
         {
             var symbol = key.replace(/[0-9]/g, "");
             var isotope = isotopes[key];
-            var zoom = 1.1;
+            var zoom = 8.5;
             if (symbol != key)
             {
                 var N = isotope.N;
